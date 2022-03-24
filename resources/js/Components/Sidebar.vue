@@ -1,18 +1,11 @@
 <template>
     <nav
-        class="ltn-sidebar flex flex-col justify-between bg-black sticky z-20 bottom-0 left-0 h-16 w-full xl:px-6 xl:w-64 md:h-screen md:w-32 md:py-6 md:px-4 md:top-0"
+        class="ltn-sidebar flex flex-col justify-between bg-blue-700 sticky z-20 bottom-0 left-0 h-16 w-full xl:pl-6 xl:w-64 md:h-screen md:w-32 md:py-6 md:pl-4 md:top-0"
     >
         <div class="flex flex-col">
-            <Link
-                :href="route('appointments.index')"
-                class="hidden pb-5 text-center md:block"
-            >
-                <!-- <img
-                    alt="LTN Express Logo"
-                    class="inline-block h-6 xl:h-10"
-                    src="img/logo-with-type-white.svg"
-                /> -->
-            </Link>
+            <div class="flex justify-center mb-4">
+                <i class="fas fa-cube fa-3x text-white"></i>
+            </div>
 
             <ul
                 class="ltn-sidebar__links flex items-center w-full md:block md:mt-8"

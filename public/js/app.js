@@ -24603,7 +24603,7 @@ var _withScopeId = function _withScopeId(n) {
 };
 
 var _hoisted_1 = {
-  "class": "w-full pt-6 pb-3 container-min-h pl-6 bg-gray-200"
+  "class": "w-full pt-6 pb-3 container-min-h bg-white"
 };
 var _hoisted_2 = {
   "class": "ltn-topbar ltn-dashboard-container flex justify-between mb-5"
@@ -24893,18 +24893,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "ltn-sidebar flex flex-col justify-between bg-black sticky z-20 bottom-0 left-0 h-16 w-full xl:px-6 xl:w-64 md:h-screen md:w-32 md:py-6 md:px-4 md:top-0"
+  "class": "ltn-sidebar flex flex-col justify-between bg-blue-700 sticky z-20 bottom-0 left-0 h-16 w-full xl:pl-6 xl:w-64 md:h-screen md:w-32 md:py-6 md:pl-4 md:top-0"
 };
 var _hoisted_2 = {
   "class": "flex flex-col"
 };
-var _hoisted_3 = {
+
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "flex justify-center mb-4"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "fas fa-cube fa-3x text-white"
+})], -1
+/* HOISTED */
+);
+
+var _hoisted_4 = {
   "class": "ltn-sidebar__links flex items-center w-full md:block md:mt-8"
 };
 
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Appointments");
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Appointments");
 
-var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
   "class": "hidden text-sm text-gray-200 text-center xl:block"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Crafted by "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
   "class": "underline",
@@ -24915,36 +24924,22 @@ var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  var _component_Link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Link");
-
   var _component_sidebar_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("sidebar-link");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("nav", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
-    href: _ctx.route('appointments.index'),
-    "class": "hidden pb-5 text-center md:block"
-  }, {
-    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <img\r\n                    alt=\"LTN Express Logo\"\r\n                    class=\"inline-block h-6 xl:h-10\"\r\n                    src=\"img/logo-with-type-white.svg\"\r\n                /> ")];
-    }),
-    _: 1
-    /* STABLE */
-
-  }, 8
-  /* PROPS */
-  , ["href"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_sidebar_link, {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("nav", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_sidebar_link, {
     active: _ctx.route().current('appointments.index'),
     href: _ctx.route('appointments.index'),
     icon: "fas fa-cube"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_4];
+      return [_hoisted_5];
     }),
     _: 1
     /* STABLE */
 
   }, 8
   /* PROPS */
-  , ["active", "href"])])]), _hoisted_5]);
+  , ["active", "href"])])]), _hoisted_6]);
 }
 
 /***/ }),
@@ -24973,8 +24968,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("li", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
     href: $props.href,
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["flex flex-col items-center px-0 w-full py-3 md:rounded-md md:mb-2 xl:flex-row xl:w-auto xl:px-6", {
-      'text-white bg-red': $props.active,
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["flex flex-col items-center px-0 w-full py-3 md:rounded-l-full md:mb-2 xl:flex-row xl:w-auto xl:px-6", {
+      'text-blue-700 bg-white': $props.active,
       'text-gray': !$props.active
     }])
   }, {
