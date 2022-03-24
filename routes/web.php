@@ -2,6 +2,7 @@
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AppointmentController;
 use Inertia\Inertia;
 
 /*
@@ -27,5 +28,11 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+
+Route::resource("appointments", AppointmentController::class)->except([
+    "edit",
+    "create",
+])->middleware(['auth', 'verified']);
 
 require __DIR__.'/auth.php';
