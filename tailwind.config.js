@@ -13,9 +13,15 @@ module.exports = {
             transparent: "transparent",
             white: {
                 DEFAULT: "#FFFFFF",
+                500: "#FAFAFA",
             },
             blue: {
+                50: "#AEA5EE",
                 700: "#4538A1",
+            },
+
+            gray: {
+                700: "#808080",
             },
         },
         extend: {

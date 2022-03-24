@@ -1,7 +1,7 @@
 <template>
     <dashboard-layout
-        :header-caption="Dashboard"
-        header="Dashboard"
+        :header-caption="Settings"
+        header="Settings"
     ></dashboard-layout>
 </template>
 

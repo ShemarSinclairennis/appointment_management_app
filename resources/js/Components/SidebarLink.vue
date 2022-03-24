@@ -3,7 +3,10 @@
         <Link
             :href="href"
             class="flex flex-col items-center px-0 w-full py-3 md:rounded-l-full md:mb-2 xl:flex-row xl:w-auto xl:px-6"
-            :class="{ 'text-blue-700 bg-white': active, 'text-gray': !active }"
+            :class="{
+                'text-blue-700 bg-white drop-shadow-lg': active,
+                'text-white hover:bg-blue-50': !active,
+            }"
         >
             <i class="xl:mr-4 xl:mb-0 mb-1 mr-0" :class="icon"></i>
             <span class="xl:font-medium xl:text-base text-xs">

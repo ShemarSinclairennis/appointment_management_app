@@ -11,10 +11,28 @@
                 class="ltn-sidebar__links flex items-center w-full md:block md:mt-8"
             >
                 <sidebar-link
+                    :active="route().current('dashboard.index')"
+                    :href="route('dashboard.index')"
+                    icon="fas fa-list"
+                    >Dashboard</sidebar-link
+                >
+                <sidebar-link
                     :active="route().current('appointments.index')"
                     :href="route('appointments.index')"
-                    icon="fas fa-cube"
+                    icon="fas fa-calendar-check"
                     >Appointments</sidebar-link
+                >
+                <sidebar-link
+                    :active="route().current('information.index')"
+                    :href="route('information.index')"
+                    icon="fas fa-info-circle"
+                    >Information</sidebar-link
+                >
+                <sidebar-link
+                    :active="route().current('settings.index')"
+                    :href="route('settings.index')"
+                    icon="fas fa-cog"
+                    >Settings</sidebar-link
                 >
             </ul>
         </div>

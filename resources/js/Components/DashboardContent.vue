@@ -1,10 +1,10 @@
 <template>
-    <div class="w-full pt-6 pb-3 container-min-h bg-white">
+    <div class="w-full pt-6 pb-3 container-min-h bg-white-500">
         <div
-            class="ltn-topbar ltn-dashboard-container flex justify-between mb-5"
+            class="ltn-topbar ltn-dashboard-container flex justify-between mb-5 ml-8"
         >
             <div class="ltn-topbar__heading">
-                <h1 v-if="header" class="text-4xl font-semi-bold text-gray-400">
+                <h1 v-if="header" class="text-4xl font-semi-bold text-gray-700">
                     <span>{{ header }}&nbsp;</span>
                 </h1>
             </div>
