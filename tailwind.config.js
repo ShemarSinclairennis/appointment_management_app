@@ -15,12 +15,21 @@ module.exports = {
                 DEFAULT: "#FFFFFF",
                 500: "#FAFAFA",
             },
+            peach: {
+                DEFAULT: "#F8F1FD",
+            },
+
             blue: {
                 50: "#AEA5EE",
                 700: "#4538A1",
+                800: "#3D41D8",
+            },
+            green: {
+                50: "#DFFFE8",
             },
 
             gray: {
+                50: "#F5F8FD",
                 700: "#808080",
             },
         },

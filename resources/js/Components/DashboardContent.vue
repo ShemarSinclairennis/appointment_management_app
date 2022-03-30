@@ -1,7 +1,7 @@
 <template>
-    <div class="w-full pt-6 pb-3 container-min-h bg-white-500">
+    <div class="w-full pt-6 pb-3 container-min-h bg-white">
         <div
-            class="ltn-topbar ltn-dashboard-container flex justify-between mb-5 ml-8"
+            class="ltn-topbar ltn-dashboard-container flex justify-between mb-5 ml-14"
         >
             <div class="ltn-topbar__heading">
                 <h1 v-if="header" class="text-4xl font-semi-bold text-gray-700">
@@ -30,7 +30,7 @@
                 </button>
             </div>
         </div>
-        <div class="ltn-dashboard-container pt-4 md:pt-6">
+        <div class="ltn-dashboard-container pt-4 md:pt-6 ml-14 mr-14">
             <slot />
         </div>
     </div>
@@ -39,6 +39,7 @@
 <script>
 import { Link } from "@inertiajs/inertia-vue3";
 import { inject } from "vue";
+
 export default {
     components: {
         Link,
