@@ -5,6 +5,10 @@
         "
         class="h-64 w-3/5"
     >
+        <div class="w-2/5 m-4">
+            <p class="font-bold text-5xl text-white">Are you insured?</p>
+            <p class="text-white text-sm">Watch our video on Insurance Plan.</p>
+        </div>
     </base-card>
 </template>
 

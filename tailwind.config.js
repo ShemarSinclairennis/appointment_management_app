@@ -21,16 +21,19 @@ module.exports = {
 
             blue: {
                 50: "#AEA5EE",
+                60: "#F5F8FD",
                 700: "#4538A1",
                 800: "#3D41D8",
             },
             green: {
                 50: "#DFFFE8",
+                300: "#37E44D",
             },
 
             gray: {
                 50: "#F5F8FD",
                 700: "#808080",
+                800: "#3E3E3E",
             },
         },
         extend: {

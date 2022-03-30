@@ -4,7 +4,7 @@
     >
         <div class="flex flex-col">
             <div class="flex justify-center mb-4">
-                <i class="fas fa-cube fa-3x text-white"></i>
+                <i class="fas fa-feather-alt fa-3x text-white"></i>
             </div>
 
             <ul
@@ -37,12 +37,15 @@
             </ul>
         </div>
 
-        <p class="hidden text-sm text-gray-200 text-center xl:block">
-            Crafted by
-            <a class="underline" href="https://niageo.com" target="_blank"
-                >Niageo</a
+        <p class="hidden text-sm text-white text-center xl:block">
+            Made by
+            <a
+                class="underline text-white"
+                href="https://github.com/ShemarSinclairennis"
+                target="_blank"
+                >Shemar Ennis</a
             >
-            💪🏽
+            <i class="fab fa-github ml-2 text-white"></i>
         </p>
     </nav>
 </template>
