@@ -1,7 +1,7 @@
 <template>
     <dashboard-layout :header-caption="Dashboard" header="Dashboard">
         <div class="flex">
-            <user-card class="mr-12" name="Jessy Jane" email="jane@gmail.com" />
+            <user-card class="mr-12" />
             <div class="mr-12">
                 <date-card
                     class="mb-8"

@@ -4,11 +4,16 @@
         <div class="mt-6">
             <div class="flex">
                 <div class="font-semibold">Name</div>
-                <div class="font-light">: {{ name }}</div>
+                <div class="font-light">
+                    : {{ $page.props.auth.user.first_name }}
+                    {{ $page.props.auth.user.last_name }}
+                </div>
             </div>
             <div class="flex text-sm text-gray-700">
                 <div class="font-semibold">Email</div>
-                <div class="font-light">: {{ email }}</div>
+                <div class="font-light">
+                    : {{ $page.props.auth.user.email }}
+                </div>
             </div>
         </div>
     </base-card>
@@ -20,7 +25,6 @@ export default {
     components: {
         BaseCard,
     },
-    props: ["name", "email"],
 };
 </script>
 
