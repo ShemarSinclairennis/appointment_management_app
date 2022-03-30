@@ -15,7 +15,9 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        return Inertia::render("Appointments", []);
+        return Inertia::render("Appointments", [
+            'appointments' => Appointment::paginate(10)
+        ]);
     }
 
     /**
