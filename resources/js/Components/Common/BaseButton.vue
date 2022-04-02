@@ -7,8 +7,8 @@
         class="hover:bg-green-300 text-white font-bold py-2 px-4 rounded-lg"
         :type="type"
     >
+        <i :class="icon" class="mr-2"></i>
         {{ label }}
-        <i :class="icon"></i>
     </button>
 </template>
 <script>

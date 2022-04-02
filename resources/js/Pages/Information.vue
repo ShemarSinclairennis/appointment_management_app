@@ -1,19 +1,23 @@
 <template>
     <dashboard-layout :header-caption="Information" header="Information">
-        <base-button
-            v-if="!patient.length"
-            class="mb-4 mr-4"
-            color="blue"
-            icon="fas fa-plus"
-            label="Edit Information"
-        />
-        <base-button
-            v-else
-            class="mb-4 mr-4"
-            color="blue"
-            icon=""
-            label="Add Information"
-        />
+        <div class="flex justify-end">
+            <Link :href="route('patient.create')">
+                <base-button
+                    v-if="!patient.id"
+                    class="mb-4 mr-4"
+                    color="blue"
+                    icon="fas fa-plus"
+                    label="Add Information"
+                />
+            </Link>
+            <base-button
+                v-if="patient.id"
+                class="mb-4 mr-4"
+                color="blue"
+                icon="fas fa-edit"
+                label="Edit Information"
+            />
+        </div>
         <div class="mb-8">
             <div class="mb-4">
                 <label class="text-2xl text-gray-700 font-medium"
@@ -126,12 +130,14 @@ import DashboardLayout from "@/Layouts/DashboardLayout";
 import BaseCard from "@/Components/Common/BaseCard";
 import BaseButton from "@/Components/Common/BaseButton";
 import InformationLabel from "@/Components/Common/InformationLabel";
+import { Link } from "@inertiajs/inertia-vue3";
 export default {
     components: {
         DashboardLayout,
         BaseCard,
         BaseButton,
         InformationLabel,
+        Link,
     },
     props: {
         patient: Object,

@@ -244,7 +244,11 @@ export default {
     },
     methods: {
         submit() {
-            this.form.post(route("patient.store"));
+            this.form.post(route("patient.store"), {
+                onSuccess: () => {
+                    this.form.reset();
+                },
+            });
         },
     },
 };

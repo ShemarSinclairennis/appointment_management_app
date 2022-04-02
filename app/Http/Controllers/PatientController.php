@@ -17,10 +17,18 @@ class PatientController extends Controller
     public function index()
     {
         $id = Auth::id();
-        $patient = Patient::find(['patient_id' => $id])->first();  
-        return Inertia::render("Information",[
+        $empty_object=[];
+        $patient = Patient::find(['patient_id' => $id])->first(); 
+        if(empty($patient)) 
+        {return Inertia::render("Information",["patient"=>$empty_object]);}
+        else
+        {return Inertia::render("Information",[
             "patient"=> $patient
-        ]);
+            
+        ]); };
+            
+
+      
     }
 
     /**
@@ -65,9 +73,7 @@ class PatientController extends Controller
         $patient->emergency_home_phone = $request->emergency_home_phone;
         $patient->emergency_cell_phone = $request->emergency_cell_phone;
         $patient->save();
-        return redirect()
-        ->route("patient.index")
-        ->withSuccess("Patient was added successfully!");
+        return back()->withSuccess("Patient added to the system");
     }
 
     /**
@@ -101,7 +107,26 @@ class PatientController extends Controller
      */
     public function update(Request $request, Patient $patient)
     {
-        //
+        
+        $patient->patient_id = Auth::id();
+        $patient->first_name = $request->first_name;
+        $patient->last_name = $request->last_name;
+        $patient->middle_initial = $request->middle_initial;
+        $patient->gender = $request->gender;
+        $patient->dob = $request->dob; 
+        $patient->street_address = $request->street_address;
+        $patient->city = $request->city;
+        $patient->parish = $request->parish;
+        $patient->home_phone = $request->home_phone;
+        $patient->cell_phone = $request->cell_phone;
+        $patient->email = $request->email;
+        $patient->occupation = $request->occupation;
+        $patient->employer = $request->employer;
+        $patient->employer_number = $request->employer_number;
+        $patient->emergency_name = $request->emergency_name;
+        $patient->emergency_home_phone = $request->emergency_home_phone;
+        $patient->emergency_cell_phone = $request->emergency_cell_phone;
+        $patient->save();
     }
 
     /**
