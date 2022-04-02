@@ -1,5 +1,9 @@
 <template>
-    <dashboard-layout header="Add Information">
+    <dashboard-layout>
+        <h1 class="text-4xl font-semi-bold text-gray-700 mb-8">
+            <span>{{ mode }}&nbsp;Information</span>
+        </h1>
+
         <!-- Customer Information Form-->
         <form @submit.prevent="submit">
             <!-- Name Fields-->
@@ -192,6 +196,9 @@ export default {
         DashboardLayout,
         BaseInput,
         BaseButton,
+    },
+    props: {
+        mode: String,
     },
     data() {
         const parishes = [

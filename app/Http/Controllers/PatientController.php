@@ -32,7 +32,7 @@ class PatientController extends Controller
     {
         return Inertia::render("Forms/Patientform", [
           
-            "mode" => "Create",
+            "mode" => "Add",
         ]);
     }
 
