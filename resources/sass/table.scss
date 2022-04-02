@@ -1,0 +1,65 @@
+@use 'sass:string';
+
+@layer components {
+  .table-container {
+    min-height: calc(100vh - 300px);
+  }
+
+  .table-custom {
+    $empty: string.unquote('&:not(.empty)');
+
+    @apply w-full table-fixed;
+
+    th,
+    #{$empty} td {
+      @apply md:border-b md:border-gray-100 py-4 text-left;
+    }
+
+    #{$empty} td {
+      @apply cursor-pointer overflow-ellipsis whitespace-nowrap pr-4;
+
+      @media screen and (max-width: 768px) {
+        &::before {
+          content: attr(data-label);
+          @apply block font-bold mb-1 text-gray;
+        }
+      }
+    }
+
+    #{$empty} td:not(.extend) {
+      @apply truncate;
+    }
+
+    th {
+      @apply font-bold text-gray;
+    }
+
+    #{$empty} tr {
+      @apply grid grid-cols-2 gap-x-4 border-2 border-gray-100 pb-2 px-4 mt-4 relative rounded-md;
+      @apply md:border-none md:table-row md:pb-0;
+    }
+
+    td {
+      @apply block md:table-cell;
+    }
+
+    thead {
+      @apply hidden md:table-header-group;
+    }
+
+    tbody {
+      @apply block md:table-row-group;
+    }
+
+    tr td:first-of-type,
+    tr th:first-of-type,
+    thead th:first-of-type {
+      @apply md:pl-4;
+    }
+
+    #{$empty} tbody tr:hover,
+    #{$empty} tr.active {
+      @apply bg-gray-100 bg-opacity-60;
+    }
+  }
+}

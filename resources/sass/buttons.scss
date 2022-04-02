@@ -1,0 +1,46 @@
+@layer components {
+  .btn,
+  .btn-square {
+    @apply text-white transition-all duration-100 ease-linear;
+
+    &-red {
+      @apply bg-red hover:bg-red-400;
+    }
+
+    &-blue {
+      @apply bg-blue;
+    }
+
+    &-green {
+      @apply bg-green;
+    }
+
+    &:disabled {
+      @apply bg-opacity-50 cursor-not-allowed;
+    }
+  }
+
+  .btn {
+    @apply h-11 px-6 text-white font-bold flex justify-center items-center rounded-md;
+
+    &-email {
+      @apply text-red border-2 border-black flex items-center;
+    }
+
+    &-email i {
+      justify-self: start;
+    }
+
+    &-email span {
+      @apply mx-auto;
+    }
+  }
+
+  .btn-square {
+    @apply h-11 w-11 inline-flex justify-center items-center text-base rounded-lg flex-shrink-0;
+
+    &-outline {
+      @apply bg-transparent border-2 border-black text-black;
+    }
+  }
+}

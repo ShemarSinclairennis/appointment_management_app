@@ -1,15 +1,13 @@
 <template>
     <nav
-        class="ltn-sidebar flex flex-col justify-between bg-blue-800 sticky z-20 bottom-0 left-0 h-16 w-full xl:pl-6 xl:w-64 md:h-screen md:w-32 md:py-6 md:pl-4 md:top-0"
+        class="flex flex-col justify-between bg-blue-800 sticky z-20 bottom-0 left-0 h-16 w-full xl:pl-6 xl:w-64 md:h-screen md:w-32 md:py-6 md:pl-4 md:top-0"
     >
         <div class="flex flex-col">
             <div class="flex justify-center mb-4">
                 <i class="fas fa-feather-alt fa-3x text-white"></i>
             </div>
 
-            <ul
-                class="ltn-sidebar__links flex items-center w-full md:block md:mt-8"
-            >
+            <ul class="flex items-center w-full md:block md:mt-8">
                 <sidebar-link
                     :active="route().current('dashboard.index')"
                     :href="route('dashboard.index')"
@@ -23,8 +21,8 @@
                     >Appointments</sidebar-link
                 >
                 <sidebar-link
-                    :active="route().current('information.index')"
-                    :href="route('information.index')"
+                    :active="route().current('patient.index')"
+                    :href="route('patient.index')"
                     icon="fas fa-info-circle"
                     >Information</sidebar-link
                 >
@@ -33,6 +31,12 @@
                     :href="route('settings.index')"
                     icon="fas fa-cog"
                     >Settings</sidebar-link
+                >
+                <sidebar-link
+                    :active="route().current('patient.create')"
+                    :href="route('patient.create')"
+                    icon="fas fa-cog"
+                    >Form</sidebar-link
                 >
             </ul>
         </div>

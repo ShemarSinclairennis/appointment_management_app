@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SettingController;
-use App\Http\Controllers\InformationController;
+use App\Http\Controllers\PatientController;
 use Inertia\Inertia;
 
 /*
@@ -46,10 +46,7 @@ Route::resource("settings", SettingController::class)->except([
     "create",
 ])->middleware(['auth', 'verified']);
 
-Route::resource("information", InformationController::class)->except([
-    "edit",
-    "create",
-])->middleware(['auth', 'verified']);
+Route::resource("patient", PatientController::class)->middleware(['auth', 'verified']);
 
 
 require __DIR__.'/auth.php';

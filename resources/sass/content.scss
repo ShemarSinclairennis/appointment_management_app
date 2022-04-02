@@ -1,0 +1,6 @@
+@layer components {
+  .ltn-dashboard-container {
+    @apply w-full mx-auto;
+    max-width: 94%;
+  }
+}

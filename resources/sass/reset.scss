@@ -1,0 +1,13 @@
+@layer base {
+  * {
+    @apply transition-all ease-linear duration-100;
+  }
+
+  body {
+    @apply text-black;
+  }
+
+  *:disabled:hover {
+    @apply cursor-not-allowed;
+  }
+}

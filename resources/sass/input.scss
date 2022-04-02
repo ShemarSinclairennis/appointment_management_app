@@ -1,0 +1,83 @@
+$namespace: "xmx"; // change the 'mx' to 'xmx'. then <date-picker prefix-class="xmx" />
+
+$default-color: #191d23;
+$primary-color: #ec2a2f;
+
+@import "~vue-datepicker-next/scss/index.scss";
+
+@layer components {
+    input[type="checkbox"] {
+        border-radius: 4px;
+    }
+
+    [type="checkbox"]:checked,
+    [type="radio"]:checked {
+        &,
+        &:focus,
+        &:hover {
+            @apply bg-blue;
+        }
+    }
+
+    .input-default-size,
+    .input-default-size .xmx-datepicker-range {
+        width: 240px;
+    }
+
+    @media screen and (max-width: 1024px) {
+        .input-default-size,
+        .input-default-size .xmx-datepicker-range {
+            width: auto;
+        }
+    }
+
+    .input-label {
+        @apply mb-2 block font-medium;
+    }
+
+    .input-container,
+    .input-field,
+    .xmx-input {
+        @apply bg-white border border-black rounded-md w-full h-11 px-3 transition-all duration-150 ease-in-out #{!important};
+
+        &.input-invalid,
+        &:invalid {
+            @apply border border-red #{!important};
+        }
+    }
+
+    .input-field,
+    .xmx-input {
+        @apply border focus:ring-2 focus:ring-blue-100 #{!important};
+    }
+
+    .input-container {
+        @apply focus-within:ring-2 focus-within:ring-blue-100;
+        @apply flex items-center;
+
+        input {
+            @apply flex-grow outline-none border-none focus:ring-transparent p-0;
+        }
+
+        .trailing,
+        .leading {
+            @apply text-lg flex-shrink-0;
+        }
+
+        .trailing {
+            @apply mr-2;
+        }
+
+        .leading {
+            @apply ml-2;
+        }
+    }
+}
+
+.xmx-datepicker svg {
+    fill: #191d23 !important;
+}
+
+.xmx-datepicker-range {
+    @apply w-full #{!important};
+}
