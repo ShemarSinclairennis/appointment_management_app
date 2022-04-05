@@ -9,13 +9,14 @@
 
             <ul class="flex items-center w-full md:block md:mt-8">
                 <sidebar-link
+                    v-if="isPatientUser"
                     :active="route().current('dashboard.index')"
                     :href="route('dashboard.index')"
                     icon="fas fa-list"
                     >Dashboard</sidebar-link
                 >
                 <sidebar-link
-                    v-if="isDoctorUser"
+                    v-if="isAdminUser"
                     :active="route().current('patient.index')"
                     :href="route('patient.index')"
                     icon="fas fa-list"
@@ -37,6 +38,13 @@
                         )
                     "
                     :href="route('appointments.show', $page.props.auth.user.id)"
+                    icon="fas fa-calendar-check"
+                    >Appointments</sidebar-link
+                >
+                <sidebar-link
+                    v-if="isDoctorUser"
+                    :active="route().current('appointments.index')"
+                    :href="route('appointments.index')"
                     icon="fas fa-calendar-check"
                     >Appointments</sidebar-link
                 >

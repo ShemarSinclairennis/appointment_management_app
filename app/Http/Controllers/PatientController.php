@@ -18,7 +18,7 @@ class PatientController extends Controller
     {
        
             
-        return Inertia::render("Patients", [
+        return Inertia::render("Doctor/Patients", [
             "patients"=> Patient::all(),
                 
         ]);

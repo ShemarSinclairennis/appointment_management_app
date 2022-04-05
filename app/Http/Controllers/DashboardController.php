@@ -21,7 +21,7 @@ class DashboardController extends Controller
         $id = Auth::id();
         $appointments= Appointment::where('patient_id',$id)->get()->toArray();
    
-        return Inertia::render("Dashboard", [
+        return Inertia::render("Patient/Dashboard", [
             'appointments' => $appointments
         ]);
     }

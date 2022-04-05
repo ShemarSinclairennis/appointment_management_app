@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\PatientController;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
@@ -37,7 +38,17 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        $user_type = Auth::user()->user_type;
+
+        if ($user_type == 'doctor'){
+            return redirect()->route("appointments.index");
+        }elseif($user_type =="patient"){
+            return redirect()->route("dashboard.index");
+        }else{
+            return redirect()->route("doctors.index");
+        }
+
+       
     }
 
     /**
