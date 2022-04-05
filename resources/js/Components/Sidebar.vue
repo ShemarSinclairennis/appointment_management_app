@@ -15,14 +15,40 @@
                     >Dashboard</sidebar-link
                 >
                 <sidebar-link
-                    :active="route().current('appointments.index')"
-                    :href="route('appointments.index')"
+                    v-if="isDoctorUser"
+                    :active="route().current('patient.index')"
+                    :href="route('patient.index')"
+                    icon="fas fa-list"
+                    >Patients</sidebar-link
+                >
+                <sidebar-link
+                    v-if="isAdminUser"
+                    :active="route().current('doctors.index')"
+                    :href="route('doctors.index')"
+                    icon="fas fa-list"
+                    >Doctors</sidebar-link
+                >
+                <sidebar-link
+                    v-if="isPatientUser"
+                    :active="
+                        route().current(
+                            'appointments.show',
+                            $page.props.auth.user.id
+                        )
+                    "
+                    :href="route('appointments.show', $page.props.auth.user.id)"
                     icon="fas fa-calendar-check"
                     >Appointments</sidebar-link
                 >
                 <sidebar-link
-                    :active="route().current('patient.index')"
-                    :href="route('patient.index')"
+                    v-if="isPatientUser"
+                    :active="
+                        route().current(
+                            'patient.show',
+                            $page.props.auth.user.id
+                        )
+                    "
+                    :href="route('patient.show', $page.props.auth.user.id)"
                     icon="fas fa-info-circle"
                     >Information</sidebar-link
                 >
@@ -33,6 +59,7 @@
                     >Settings</sidebar-link
                 >
                 <sidebar-link
+                    v-if="isPatientUser"
                     :active="route().current('patient.create')"
                     :href="route('patient.create')"
                     icon="fas fa-cog"
@@ -67,7 +94,8 @@ export default {
     data() {
         return {
             isAdminUser: this.$page.props.auth.user.user_type === "admin",
-            isRegularUser: this.$page.props.auth.user.user_type === "regular",
+            isPatientUser: this.$page.props.auth.user.user_type === "patient",
+            isDoctorUser: this.$page.props.auth.user.user_type === "doctor",
         };
     },
 };

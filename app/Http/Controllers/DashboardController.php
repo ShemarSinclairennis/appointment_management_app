@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Dashboard;
+use App\Models\Appointment;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -14,8 +16,14 @@ class DashboardController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
+
     {
-        return Inertia::render("Dashboard", []);
+        $id = Auth::id();
+        $appointments= Appointment::where('patient_id',$id)->get()->toArray();
+   
+        return Inertia::render("Dashboard", [
+            'appointments' => $appointments
+        ]);
     }
 
     /**

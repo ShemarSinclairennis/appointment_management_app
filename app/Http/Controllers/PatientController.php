@@ -16,19 +16,12 @@ class PatientController extends Controller
      */
     public function index()
     {
-        $id = Auth::id();
-        $empty_object=[];
-        $patient = Patient::find(['patient_id' => $id])->first(); 
-        if(empty($patient)) 
-        {return Inertia::render("Information",["patient"=>$empty_object]);}
-        else
-        {return Inertia::render("Information",[
-            "patient"=> $patient
+       
             
-        ]); };
-            
-
-      
+        return Inertia::render("Patients", [
+            "patients"=> Patient::all(),
+                
+        ]);
     }
 
     /**
@@ -84,7 +77,16 @@ class PatientController extends Controller
      */
     public function show(Patient $patient)
     {
-        //
+        $id = Auth::id();
+        $empty_object=[];
+        $patient = Patient::find(['patient_id' => $id])->first(); 
+        if(empty($patient)) 
+        {return Inertia::render("Patient/Information",["patient"=>$empty_object]);}
+        else
+        {return Inertia::render("Patient/Information",[
+            "patient"=> $patient
+            
+        ]); };
     }
 
     /**

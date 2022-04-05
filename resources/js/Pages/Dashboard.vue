@@ -41,11 +41,11 @@
                     <p>Date</p>
                     <p>Time</p>
                 </div>
-                <div v-for="n in 5" :key="n">
+                <div v-for="appointment in appointments" :key="appointment.id">
                     <div
                         class="grid gap-2 grid-cols-2 font-light text-gray-800 mb-1"
                     >
-                        <p>May 22,2022</p>
+                        <p>{{ appointment.reason }}</p>
                         <div class="flex">
                             <div>8:00 PM</div>
                             <div class="ml-8">
@@ -100,6 +100,9 @@ export default {
         BaseCard,
         NewsCard,
         SmallTable,
+    },
+    prop: {
+        appointments: Array,
     },
 };
 </script>

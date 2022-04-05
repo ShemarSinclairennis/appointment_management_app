@@ -7,7 +7,7 @@
             <slot />
         </dashboard-content>
 
-        <flash-messages />
+        <flash-messages /> 
     </div>
 </template>
 

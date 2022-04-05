@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appointment;
+use App\Models\Patient;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
 
 class AppointmentController extends Controller
 {
@@ -15,9 +17,7 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        return Inertia::render("Appointments", [
-            'appointments' => Appointment::paginate(10)
-        ]);
+      
     }
 
     /**
@@ -38,7 +38,14 @@ class AppointmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $appointment = new Appointment;
+        $appointment->reason = $request->reason;
+        $appointment->appointment_date = $request->appointment_date;
+        $appointment->appointment_time = $request->appointment_time;
+        $appointment->patient_id = Auth::id();
+        $appointment->status ='Waiting';
+        $appointment->save();
+        return back()->withSuccess("Appointment created");
     }
 
     /**
@@ -47,9 +54,12 @@ class AppointmentController extends Controller
      * @param  \App\Models\Appointment  $appointment
      * @return \Illuminate\Http\Response
      */
-    public function show(Appointment $appointment)
+    public function show(Patient $patient)
     {
-        //
+        $id = Auth::id();
+        return Inertia::render("Patient/Appointments", [
+            'appointments' => Appointment::where('patient_id',$id)->orderBy('created_at', 'desc')->paginate(10)
+        ]);
     }
 
     /**

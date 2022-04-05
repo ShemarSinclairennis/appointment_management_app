@@ -49,6 +49,9 @@ module.exports = {
                 700: "#808080",
                 800: "#3E3E3E",
             },
+            purple: {
+                400: "#7100F5",
+            },
         },
         extend: {
             fontFamily: {

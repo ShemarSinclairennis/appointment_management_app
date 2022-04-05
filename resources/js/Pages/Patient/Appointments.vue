@@ -1,12 +1,21 @@
 <template>
     <dashboard-layout :header-caption="Appointments" header="Appointments">
-        <div class="mb-4 max-w-xs">
-            <input
-                type="search"
-                v-model="params.search"
-                aria-label="Search"
-                placeholder="Search..."
-                class="block w-full rounded-md border-gray-700 shadow-sm focus:ring-blue-700 focus:border-blue-700 sm:text-sm"
+        <div class="flex justify-between mb-6">
+            <div class="max-w-xs">
+                <input
+                    type="search"
+                    v-model="params.search"
+                    aria-label="Search"
+                    placeholder="Search..."
+                    class="block w-full rounded-md border-gray-700 shadow-sm focus:ring-blue-700 focus:border-blue-700 sm:text-sm"
+                />
+            </div>
+            <base-button
+                class="mb-4 mr-4"
+                color="blue"
+                icon="fas fa-plus"
+                label="Make Appointment"
+                @click="toggleAppointmentModal()"
             />
         </div>
 
@@ -90,10 +99,11 @@
                                                 )
                                             "
                                         />
-                                        <td
-                                            class="py-4 px-6 text-sm text-gray-800 whitespace-nowrap"
-                                            v-text="appointment.status"
-                                        />
+                                        <td>
+                                            <status-tag
+                                                :status="appointment.status"
+                                            />
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -103,6 +113,10 @@
             </div>
         </div>
         <pagination class="mt-10" :links="appointments.links" />
+        <appointment-modal
+            v-if="showAppointmentModal"
+            @toggle="toggleAppointmentModal"
+        />
     </dashboard-layout>
 </template>
 
@@ -110,18 +124,33 @@
 import DashboardLayout from "@/Layouts/DashboardLayout";
 import Pagination from "@/Components/Common/Pagination";
 import useFormatter from "@/Components/composables/useFormatter";
+import BaseButton from "@/Components/Common/BaseButton";
+import StatusTag from "@/Components/Common/StatusTag";
+import AppointmentModal from "@/Components/AppointmentModal";
+import useModal from "@/composables/useModal";
+import { provide, toRefs } from "vue";
 
 export default {
     components: {
         DashboardLayout,
         Pagination,
+        StatusTag,
+        BaseButton,
+        AppointmentModal,
     },
     props: {
         appointments: Object,
     },
-
-    data() {
+    setup(props) {
+        const { showModal, toggleModal } = useModal();
         const { formatDate } = useFormatter();
+        const {
+            showModal: showAppointmentModal,
+            toggleModal: toggleAppointmentModal,
+            selectedValue: appointment,
+
+            mode,
+        } = useModal();
         function tConvert(time) {
             // Check correct time format and split into components
             time = time
@@ -137,7 +166,20 @@ export default {
             return time.join(""); // return adjusted time or original string
         }
 
-        return { formatDate, tConvert, params: { search: null } };
+        provide("toggleAppointmentModal", toggleAppointmentModal);
+        provide("appointment", appointment);
+
+        provide("mode", mode);
+
+        return {
+            formatDate,
+            showModal,
+            toggleModal,
+            showAppointmentModal,
+            toggleAppointmentModal,
+            tConvert,
+            params: { search: null },
+        };
     },
 
     watch: {
