@@ -24338,6 +24338,27 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/Common/RoundButton.vue?vue&type=script&lang=js":
+/*!************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/Common/RoundButton.vue?vue&type=script&lang=js ***!
+  \************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    type: String,
+    icon: String,
+    color: String
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/Common/SmallTable.vue?vue&type=script&lang=js":
 /*!***********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/Common/SmallTable.vue?vue&type=script&lang=js ***!
@@ -25475,10 +25496,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Components_Common_Pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Components/Common/Pagination */ "./resources/js/Components/Common/Pagination.vue");
 /* harmony import */ var _Components_composables_useFormatter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Components/composables/useFormatter */ "./resources/js/Components/composables/useFormatter.js");
 /* harmony import */ var _Components_Common_BaseButton__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Components/Common/BaseButton */ "./resources/js/Components/Common/BaseButton.vue");
-/* harmony import */ var _Components_Common_StatusTag__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/Components/Common/StatusTag */ "./resources/js/Components/Common/StatusTag.vue");
-/* harmony import */ var _Components_AppointmentModal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/Components/AppointmentModal */ "./resources/js/Components/AppointmentModal.vue");
-/* harmony import */ var _composables_useModal__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/composables/useModal */ "./resources/js/composables/useModal.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _Components_Common_RoundButton__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/Components/Common/RoundButton */ "./resources/js/Components/Common/RoundButton.vue");
+/* harmony import */ var _Components_Common_StatusTag__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/Components/Common/StatusTag */ "./resources/js/Components/Common/StatusTag.vue");
+/* harmony import */ var _Components_AppointmentModal__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/Components/AppointmentModal */ "./resources/js/Components/AppointmentModal.vue");
+/* harmony import */ var _composables_useModal__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/composables/useModal */ "./resources/js/composables/useModal.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
 
 
 
@@ -25491,9 +25514,10 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     DashboardLayout: _Layouts_DashboardLayout__WEBPACK_IMPORTED_MODULE_0__["default"],
     Pagination: _Components_Common_Pagination__WEBPACK_IMPORTED_MODULE_1__["default"],
-    StatusTag: _Components_Common_StatusTag__WEBPACK_IMPORTED_MODULE_4__["default"],
+    StatusTag: _Components_Common_StatusTag__WEBPACK_IMPORTED_MODULE_5__["default"],
     BaseButton: _Components_Common_BaseButton__WEBPACK_IMPORTED_MODULE_3__["default"],
-    AppointmentModal: _Components_AppointmentModal__WEBPACK_IMPORTED_MODULE_5__["default"]
+    RoundButton: _Components_Common_RoundButton__WEBPACK_IMPORTED_MODULE_4__["default"],
+    AppointmentModal: _Components_AppointmentModal__WEBPACK_IMPORTED_MODULE_6__["default"]
   },
   props: {
     appointments: Object
@@ -25501,14 +25525,14 @@ __webpack_require__.r(__webpack_exports__);
   setup: function setup(props) {
     console.log(props.appointments);
 
-    var _useModal = (0,_composables_useModal__WEBPACK_IMPORTED_MODULE_6__["default"])(),
+    var _useModal = (0,_composables_useModal__WEBPACK_IMPORTED_MODULE_7__["default"])(),
         showModal = _useModal.showModal,
         toggleModal = _useModal.toggleModal;
 
     var _useFormatter = (0,_Components_composables_useFormatter__WEBPACK_IMPORTED_MODULE_2__["default"])(),
         formatDate = _useFormatter.formatDate;
 
-    var _useModal2 = (0,_composables_useModal__WEBPACK_IMPORTED_MODULE_6__["default"])(),
+    var _useModal2 = (0,_composables_useModal__WEBPACK_IMPORTED_MODULE_7__["default"])(),
         showAppointmentModal = _useModal2.showModal,
         toggleAppointmentModal = _useModal2.toggleModal,
         appointment = _useModal2.selectedValue,
@@ -25530,9 +25554,15 @@ __webpack_require__.r(__webpack_exports__);
       return time.join(""); // return adjusted time or original string
     }
 
-    (0,vue__WEBPACK_IMPORTED_MODULE_7__.provide)("toggleAppointmentModal", toggleAppointmentModal);
-    (0,vue__WEBPACK_IMPORTED_MODULE_7__.provide)("appointment", appointment);
-    (0,vue__WEBPACK_IMPORTED_MODULE_7__.provide)("mode", mode);
+    function confirm(appointment) {}
+
+    function reschedule(appointment) {}
+
+    function decline(appointment) {}
+
+    (0,vue__WEBPACK_IMPORTED_MODULE_8__.provide)("toggleAppointmentModal", toggleAppointmentModal);
+    (0,vue__WEBPACK_IMPORTED_MODULE_8__.provide)("appointment", appointment);
+    (0,vue__WEBPACK_IMPORTED_MODULE_8__.provide)("mode", mode);
     return {
       formatDate: formatDate,
       showModal: showModal,
@@ -26530,6 +26560,40 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   ))])], 512
   /* NEED_PATCH */
   )), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $props.links.length > 3]]);
+}
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/Common/RoundButton.vue?vue&type=template&id=e64ef8b2":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/Common/RoundButton.vue?vue&type=template&id=e64ef8b2 ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+var _hoisted_1 = ["type"];
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
+      'text-green-300': $props.color == 'green',
+      'text-blue-700': $props.color === 'blue',
+      'text-purple-300': $props.color == 'purple',
+      'text-red-400': $props.color === 'red'
+    }),
+    type: $props.type
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$props.icon, "mr-2"])
+  }, null, 2
+  /* CLASS */
+  )], 10
+  /* CLASS, PROPS */
+  , _hoisted_1);
 }
 
 /***/ }),
@@ -28307,8 +28371,14 @@ var _hoisted_10 = {
 var _hoisted_11 = ["textContent"];
 var _hoisted_12 = ["textContent"];
 var _hoisted_13 = ["textContent"];
+var _hoisted_14 = {
+  key: 1,
+  "class": "flex justify-end mr-9"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_status_tag = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("status-tag");
+
+  var _component_round_button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("round-button");
 
   var _component_pagination = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("pagination");
 
@@ -28349,11 +28419,27 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           textContent: (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.tConvert(appointment.appointment_time))
         }, null, 8
         /* PROPS */
-        , _hoisted_13), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_status_tag, {
+        , _hoisted_13), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [appointment.status == 'Confirmed' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_status_tag, {
+          key: 0,
           status: appointment.status
         }, null, 8
         /* PROPS */
-        , ["status"])])]);
+        , ["status"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_round_button, {
+          color: "green",
+          icon: "fas fa-check-circle fa-lg",
+          alt: "confirm",
+          type: "button"
+        }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_round_button, {
+          "class": "ml-5",
+          color: "purple",
+          icon: "fas fa-clock fa-lg",
+          type: "button"
+        }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_round_button, {
+          "class": "ml-5",
+          color: "red",
+          icon: "fas fa-times-circle fa-lg",
+          type: "button"
+        })]))])]);
       }), 128
       /* KEYED_FRAGMENT */
       ))])])])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_pagination, {
@@ -53101,6 +53187,34 @@ if (false) {}
 
 /***/ }),
 
+/***/ "./resources/js/Components/Common/RoundButton.vue":
+/*!********************************************************!*\
+  !*** ./resources/js/Components/Common/RoundButton.vue ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _RoundButton_vue_vue_type_template_id_e64ef8b2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RoundButton.vue?vue&type=template&id=e64ef8b2 */ "./resources/js/Components/Common/RoundButton.vue?vue&type=template&id=e64ef8b2");
+/* harmony import */ var _RoundButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RoundButton.vue?vue&type=script&lang=js */ "./resources/js/Components/Common/RoundButton.vue?vue&type=script&lang=js");
+/* harmony import */ var C_xampp_htdocs_appointment_management_app_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+
+
+;
+const __exports__ = /*#__PURE__*/(0,C_xampp_htdocs_appointment_management_app_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_RoundButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_RoundButton_vue_vue_type_template_id_e64ef8b2__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/Components/Common/RoundButton.vue"]])
+/* hot reload */
+if (false) {}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
+
+/***/ }),
+
 /***/ "./resources/js/Components/Common/SmallTable.vue":
 /*!*******************************************************!*\
   !*** ./resources/js/Components/Common/SmallTable.vue ***!
@@ -54143,6 +54257,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/Components/Common/RoundButton.vue?vue&type=script&lang=js":
+/*!********************************************************************************!*\
+  !*** ./resources/js/Components/Common/RoundButton.vue?vue&type=script&lang=js ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_RoundButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_RoundButton_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./RoundButton.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/Common/RoundButton.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
 /***/ "./resources/js/Components/Common/SmallTable.vue?vue&type=script&lang=js":
 /*!*******************************************************************************!*\
   !*** ./resources/js/Components/Common/SmallTable.vue?vue&type=script&lang=js ***!
@@ -54875,6 +55005,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Pagination_vue_vue_type_template_id_bc3746ba__WEBPACK_IMPORTED_MODULE_0__.render)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Pagination_vue_vue_type_template_id_bc3746ba__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Pagination.vue?vue&type=template&id=bc3746ba */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/Common/Pagination.vue?vue&type=template&id=bc3746ba");
+
+
+/***/ }),
+
+/***/ "./resources/js/Components/Common/RoundButton.vue?vue&type=template&id=e64ef8b2":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/Components/Common/RoundButton.vue?vue&type=template&id=e64ef8b2 ***!
+  \**************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_RoundButton_vue_vue_type_template_id_e64ef8b2__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_RoundButton_vue_vue_type_template_id_e64ef8b2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./RoundButton.vue?vue&type=template&id=e64ef8b2 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/Common/RoundButton.vue?vue&type=template&id=e64ef8b2");
 
 
 /***/ }),

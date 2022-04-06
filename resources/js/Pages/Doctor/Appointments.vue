@@ -94,8 +94,36 @@
                                         />
                                         <td>
                                             <status-tag
+                                                v-if="
+                                                    appointment.status ==
+                                                    'Confirmed'
+                                                "
                                                 :status="appointment.status"
                                             />
+                                            <div
+                                                v-else
+                                                class="flex justify-end mr-9"
+                                            >
+                                                <round-button
+                                                    color="green"
+                                                    icon="fas fa-check-circle fa-lg"
+                                                    alt="confirm"
+                                                    type="button"
+                                                />
+                                                <round-button
+                                                    class="ml-5"
+                                                    color="purple"
+                                                    icon="fas fa-clock fa-lg"
+                                                    type="button"
+                                                />
+
+                                                <round-button
+                                                    class="ml-5"
+                                                    color="red"
+                                                    icon="fas fa-times-circle fa-lg"
+                                                    type="button"
+                                                />
+                                            </div>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -118,6 +146,7 @@ import DashboardLayout from "@/Layouts/DashboardLayout";
 import Pagination from "@/Components/Common/Pagination";
 import useFormatter from "@/Components/composables/useFormatter";
 import BaseButton from "@/Components/Common/BaseButton";
+import RoundButton from "@/Components/Common/RoundButton";
 import StatusTag from "@/Components/Common/StatusTag";
 import AppointmentModal from "@/Components/AppointmentModal";
 import useModal from "@/composables/useModal";
@@ -129,6 +158,7 @@ export default {
         Pagination,
         StatusTag,
         BaseButton,
+        RoundButton,
         AppointmentModal,
     },
     props: {
@@ -159,6 +189,10 @@ export default {
             }
             return time.join(""); // return adjusted time or original string
         }
+
+        function confirm(appointment) {}
+        function reschedule(appointment) {}
+        function decline(appointment) {}
 
         provide("toggleAppointmentModal", toggleAppointmentModal);
         provide("appointment", appointment);
