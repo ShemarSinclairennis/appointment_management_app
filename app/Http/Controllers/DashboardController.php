@@ -19,10 +19,15 @@ class DashboardController extends Controller
 
     {
         $id = Auth::id();
-        $appointments= Appointment::where('patient_id',$id)->get()->toArray();
-   
+        $appointments_count=  Appointment::where('patient_id',$id)->count();
+        $appointments= Appointment::where('patient_id',$id)->orderBy('appointment_date','desc')->limit(5)->get();
+        $upcoming_appointment = Appointment::where('patient_id',$id)->orderBy('appointment_date','desc')->first();
+        // dd($appointments->toArray());
         return Inertia::render("Patient/Dashboard", [
-            'appointments' => $appointments
+            'appointments' => $appointments,
+            'appointments_count'=>$appointments_count,
+            'upcoming_appointment'=> $upcoming_appointment
+
         ]);
     }
 

@@ -50,13 +50,8 @@
                 >
                 <sidebar-link
                     v-if="isPatientUser"
-                    :active="
-                        route().current(
-                            'patient.show',
-                            $page.props.auth.user.id
-                        )
-                    "
-                    :href="route('patient.show', $page.props.auth.user.id)"
+                    :active="route().current('patient.patientInformation')"
+                    :href="route('patient.patientInformation')"
                     icon="fas fa-info-circle"
                     >Information</sidebar-link
                 >
@@ -65,13 +60,6 @@
                     :href="route('settings.index')"
                     icon="fas fa-cog"
                     >Settings</sidebar-link
-                >
-                <sidebar-link
-                    v-if="isPatientUser"
-                    :active="route().current('patient.create')"
-                    :href="route('patient.create')"
-                    icon="fas fa-cog"
-                    >Form</sidebar-link
                 >
             </ul>
         </div>

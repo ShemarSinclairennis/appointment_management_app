@@ -7,13 +7,15 @@
                     class="mb-8"
                     day="25"
                     month="APRIL"
-                    time="8:00 PM"
-                    reason="Update based on car accident."
+                    :time="timeConvert(upcoming_appointment.appointment_time)"
+                    :reason="upcoming_appointment.reason"
                 />
                 <div class="grid gap-5 grid-cols-2">
                     <base-card class="bg-gray-50 h-28 w-32">
                         <div class="grid place-items-center mt-2">
-                            <p class="text-6xl font-bold text-gray-700">15</p>
+                            <p class="text-6xl font-bold text-gray-700">
+                                {{ appointments_count }}
+                            </p>
                             <p class="text-sm">Appointments</p>
                         </div>
                     </base-card>
@@ -45,14 +47,10 @@
                     <div
                         class="grid gap-2 grid-cols-2 font-light text-gray-800 mb-1"
                     >
-                        <p>{{ appointment.reason }}</p>
-                        <div class="flex">
-                            <div>8:00 PM</div>
-                            <div class="ml-8">
-                                <i
-                                    class="fas fa-check-circle text-green-300"
-                                ></i>
-                            </div>
+                        <p>{{ formatDate(appointment.appointment_date) }}</p>
+
+                        <div>
+                            {{ timeConvert(appointment.appointment_time) }}
                         </div>
                     </div>
                     <div class="py-2">
@@ -90,6 +88,7 @@ import BaseCard from "@/Components/Common/BaseCard";
 import UserCard from "@/Components/Common/UserCard";
 import DateCard from "@/Components/Common/DateCard";
 import NewsCard from "@/Components/Common/NewsCard";
+import useFormatter from "@/Components/composables/useFormatter";
 import SmallTable from "@/Components/Common/SmallTable";
 
 export default {
@@ -101,8 +100,34 @@ export default {
         NewsCard,
         SmallTable,
     },
-    prop: {
+    props: {
         appointments: Array,
+        appointments_count: String,
+        upcoming_appointment: Object,
+    },
+    setup(props) {
+        const { formatDate } = useFormatter();
+
+        function timeConvert(time) {
+            // Check correct time format and split into components
+            time = time
+                .toString()
+                .match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+            if (time.length > 1) {
+                // If time format correct
+                time = time.slice(1); // Remove full string match value
+                time[5] = +time[0] < 12 ? "AM" : "PM"; // Set AM/PM
+                time[0] = +time[0] % 12 || 12; // Adjust hours
+            }
+            return time.join(""); // return adjusted time or original string
+        }
+
+        return {
+            formatDate,
+
+            timeConvert,
+        };
     },
 };
 </script>

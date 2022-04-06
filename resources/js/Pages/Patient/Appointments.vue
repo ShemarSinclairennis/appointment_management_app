@@ -11,7 +11,6 @@
                 />
             </div>
             <base-button
-                v-if="isPatientUser"
                 class="mb-4 mr-4"
                 color="blue"
                 icon="fas fa-plus"

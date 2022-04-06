@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Patient;
+use App\Models\Appointment;
 use App\Models\Doctor;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -57,7 +59,15 @@ class RegisteredUserController extends Controller
 
         return redirect(RouteServiceProvider::HOME);
     }
+    public function deleteUser (){
+        $id = Auth::id();
+        Auth::logout();
+        User::where(['id'=>$id])->delete();
+        Patient::where(['patient_id' => $id])->delete();
+        Appointment::where(['patient_id' => $id])->delete();
+        return redirect()->route('welcome');
 
+    }
     public function storeDoctor(Request $request)
     {
         // $request->validate([

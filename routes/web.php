@@ -29,7 +29,7 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-});
+})->name('welcome');
 
 
 
@@ -49,12 +49,22 @@ Route::resource("settings", SettingController::class)->except([
     "create",
 ])->middleware(['auth', 'verified']);
 
-Route::resource("patient", PatientController::class)->middleware(['auth', 'verified']);
+Route::resource("patient", PatientController::class)->except(["show"])->middleware(['auth', 'verified']);
 Route::resource("doctors", DoctorController::class)->middleware(['auth', 'verified']);
+Route::get("patient/information", [
+    PatientController::class,
+    "patientInformation",
+])->name("patient.patientInformation");
+
 Route::post("register/storeDoctor", [
     RegisteredUserController::class,
     "storeDoctor",
 ])->name("register.storeDoctor");
+
+Route::get("register/deleteUser", [
+    RegisteredUserController::class,
+    "deleteUser",
+])->name("register.deleteUser");
 
 
 

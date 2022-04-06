@@ -66,7 +66,7 @@ class PatientController extends Controller
         $patient->emergency_home_phone = $request->emergency_home_phone;
         $patient->emergency_cell_phone = $request->emergency_cell_phone;
         $patient->save();
-        return back()->withSuccess("Patient added to the system");
+        return redirect()->route('patient.patientInformation');
     }
 
     /**
@@ -77,11 +77,14 @@ class PatientController extends Controller
      */
     public function show(Patient $patient)
     {
+        
+    }
+    public function patientInformation(){
         $id = Auth::id();
-        $empty_object=[];
-        $patient = Patient::find(['patient_id' => $id])->first(); 
-        if(empty($patient)) 
-        {return Inertia::render("Patient/Information",["patient"=>$empty_object]);}
+        $patient = Patient::where(['patient_id' => $id])->first(); 
+        // dd($patient);
+        if(!$patient) {
+        return redirect()->route('patient.create');}
         else
         {return Inertia::render("Patient/Information",[
             "patient"=> $patient
@@ -129,6 +132,7 @@ class PatientController extends Controller
         $patient->emergency_home_phone = $request->emergency_home_phone;
         $patient->emergency_cell_phone = $request->emergency_cell_phone;
         $patient->save();
+        return redirect()->route('patient.patientInformation');
     }
 
     /**

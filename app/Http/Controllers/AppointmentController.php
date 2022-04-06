@@ -59,7 +59,7 @@ class AppointmentController extends Controller
     public function show(Patient $patient)
     {
         $id = Auth::id();
-        return Inertia::render("Appointments", [
+        return Inertia::render("Patient/Appointments", [
             'appointments' => Appointment::where('patient_id',$id)->orderBy('created_at', 'desc')->paginate(10)
         ]);
     }
