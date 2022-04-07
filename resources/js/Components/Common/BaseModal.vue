@@ -4,18 +4,16 @@
         @click.self="emitToggleEvent"
     >
         <div
-            class="ltn-modal__container bg-white p-8 mx-auto w-full min-h-full md:rounded-3xl md:my-8"
+            class="bg-white p-8 mx-auto w-full min-h-full md:rounded-3xl md:my-8"
         >
-            <div
-                class="ltn-modal__heading flex justify-between items-center mb-6"
-            >
+            <div class="flex justify-between items-center mb-6">
                 <div>
                     <slot name="heading" />
                 </div>
                 <close-button @click.stop="emitToggleEvent" />
             </div>
 
-            <div class="ltn-modal__content">
+            <div>
                 <slot />
             </div>
         </div>

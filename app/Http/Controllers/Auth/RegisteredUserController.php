@@ -59,15 +59,7 @@ class RegisteredUserController extends Controller
 
         return redirect(RouteServiceProvider::HOME);
     }
-    public function deleteUser (){
-        $id = Auth::id();
-        Auth::logout();
-        User::where(['id'=>$id])->delete();
-        Patient::where(['patient_id' => $id])->delete();
-        Appointment::where(['patient_id' => $id])->delete();
-        return redirect()->route('welcome');
 
-    }
     public function storeDoctor(Request $request)
     {
         // $request->validate([
@@ -99,6 +91,24 @@ class RegisteredUserController extends Controller
 
         
 
-        return back()->withSuccess("Patient added to the system");
+        return back()->withSuccess("Doctor added to the system");
+    }
+    
+    public function deleteUser (){
+        $id = Auth::id();
+        Auth::logout();
+        User::where(['id'=>$id])->delete();
+        Patient::where(['patient_id' => $id])->delete();
+        Appointment::where(['patient_id' => $id])->delete();
+        return redirect()->route('welcome');
+
+    }
+    public function deleteDoctor (Request $request){
+       
+        $id = array_column($request->doctor,'doctor_id');
+        User::where(['id'=>$id])->delete();
+        Doctor::where(['doctor_id' => $id])->delete();
+        return back()->withSuccess("Doctor removed");
+
     }
 }

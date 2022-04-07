@@ -17,18 +17,19 @@
                 >
                 <sidebar-link
                     v-if="isAdminUser"
-                    :active="route().current('patient.index')"
-                    :href="route('patient.index')"
-                    icon="fas fa-list"
-                    >Patients</sidebar-link
+                    :active="route().current('doctors.index')"
+                    :href="route('doctors.index')"
+                    icon="fas fa-user-md"
+                    >Doctors</sidebar-link
                 >
                 <sidebar-link
                     v-if="isAdminUser"
-                    :active="route().current('doctors.index')"
-                    :href="route('doctors.index')"
-                    icon="fas fa-list"
-                    >Doctors</sidebar-link
+                    :active="route().current('patient.index')"
+                    :href="route('patient.index')"
+                    icon="fas fa-users"
+                    >Patients</sidebar-link
                 >
+
                 <sidebar-link
                     v-if="isPatientUser"
                     :active="
@@ -56,6 +57,7 @@
                     >Information</sidebar-link
                 >
                 <sidebar-link
+                    v-if="isPatientUser"
                     :active="route().current('settings.index')"
                     :href="route('settings.index')"
                     icon="fas fa-cog"

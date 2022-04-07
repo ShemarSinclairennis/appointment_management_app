@@ -67,16 +67,17 @@ Route::get("register/deleteUser", [
     "deleteUser",
 ])->name("register.deleteUser");
 
+Route::delete("register/deleteDoctor", [
+    RegisteredUserController::class,
+    "deleteDoctor",
+])->name("register.deleteDoctor");
+
 Route::put("doctor/confirm", [
     DoctorController::class,
     "confirmAppointment",
 ])->name("doctor.confirm");
 
 
-//Route for mailing
-Route::get('/email', function(){
-    Mail::to('shemar.ennis@gmail.com')->send(new AppointmentMail);
-    return new AppointmentMail();
-});
+
 
 require __DIR__.'/auth.php';

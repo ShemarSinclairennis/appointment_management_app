@@ -100,6 +100,8 @@ class AppointmentController extends Controller
      */
     public function destroy(Appointment $appointment)
     {
-        //
+       Appointment::where('id',$appointment->id)->first()->delete();
+       return back()->withSuccess("Appointment removed");
+       
     }
 }

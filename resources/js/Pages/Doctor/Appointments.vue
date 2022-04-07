@@ -60,7 +60,7 @@
                                         >
                                             <span
                                                 class="inline-flex py-3 px-6 w-full justify-between"
-                                                >Status
+                                                >Actions
                                             </span>
                                         </th>
                                     </tr>
@@ -93,19 +93,40 @@
                                             "
                                         />
                                         <td>
-                                            <status-tag
+                                            <div
                                                 v-if="
                                                     appointment.status ==
                                                     'Confirmed'
                                                 "
-                                                :status="appointment.status"
-                                            />
+                                                class="flex"
+                                            >
+                                                <status-tag
+                                                    :status="appointment.status"
+                                                />
+                                                <Link
+                                                    method="delete"
+                                                    :href="
+                                                        route(
+                                                            'appointments.destroy',
+                                                            appointment
+                                                        )
+                                                    "
+                                                >
+                                                    <small-button
+                                                        class="ml-3"
+                                                        color="red"
+                                                        icon="fas fa-trash-alt fa-lg"
+                                                        label="Remove"
+                                                        type="button"
+                                                    />
+                                                </Link>
+                                            </div>
                                             <div
                                                 v-else
                                                 class="flex justify-end mr-9"
                                             >
                                                 <small-button
-                                                    color="green"
+                                                    color="blue"
                                                     icon="fas fa-check-circle fa-lg"
                                                     label="Confirm"
                                                     type="button"
@@ -115,13 +136,13 @@
                                                         })
                                                     "
                                                 />
-                                                <small-button
+                                                <!-- <small-button
                                                     class="ml-5"
                                                     color="purple"
                                                     icon="fas fa-clock fa-lg"
                                                     type="button"
                                                     label="Reschedule"
-                                                />
+                                                /> -->
 
                                                 <small-button
                                                     class="ml-5"
@@ -155,33 +176,24 @@ import useFormatter from "@/Components/composables/useFormatter";
 import BaseButton from "@/Components/Common/BaseButton";
 import SmallButton from "@/Components/Common/SmallButton";
 import StatusTag from "@/Components/Common/StatusTag";
-import AppointmentModal from "@/Components/AppointmentModal";
-import useModal from "@/composables/useModal";
-import { provide, toRefs } from "vue";
+import { Link } from "@inertiajs/inertia-vue3";
+import { Inertia } from "@inertiajs/inertia";
 
 export default {
     components: {
+        Link,
         DashboardLayout,
         Pagination,
         StatusTag,
         BaseButton,
         SmallButton,
-        AppointmentModal,
     },
     props: {
         appointments: Object,
     },
     setup(props) {
-        console.log(props.appointments);
-        const { showModal, toggleModal } = useModal();
         const { formatDate } = useFormatter();
-        const {
-            showModal: showAppointmentModal,
-            toggleModal: toggleAppointmentModal,
-            selectedValue: appointment,
 
-            mode,
-        } = useModal();
         function tConvert(time) {
             // Check correct time format and split into components
             time = time
@@ -197,22 +209,19 @@ export default {
             return time.join(""); // return adjusted time or original string
         }
 
-        function confirmAppointment(appointment) {}
+        function confirmAppointment(appointment) {
+            Inertia.visit("doctor/confirm", {
+                method: "put",
+                data: { appointment: appointment },
+            });
+        }
+
         function reschedule(appointment) {}
         function decline(appointment) {}
-
-        provide("toggleAppointmentModal", toggleAppointmentModal);
-        provide("appointment", appointment);
-
-        provide("mode", mode);
 
         return {
             confirmAppointment,
             formatDate,
-            showModal,
-            toggleModal,
-            showAppointmentModal,
-            toggleAppointmentModal,
             tConvert,
             params: { search: null },
         };

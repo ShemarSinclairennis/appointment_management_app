@@ -12,7 +12,7 @@
             </div>
         </div>
 
-        <!-- <div class="overflow-hidden bg-white shadow-md sm:rounded-lg">
+        <div class="overflow-hidden bg-white shadow-md sm:rounded-lg">
             <div class="flex flex-col">
                 <div class="overflow-x-auto -my-2 sm:-mx-6 lg:-mx-8">
                     <div
@@ -32,7 +32,7 @@
                                         >
                                             <span
                                                 class="inline-flex py-3 px-6 w-full justify-between"
-                                                >Reason
+                                                >First Name
                                             </span>
                                         </th>
                                         <th
@@ -41,7 +41,7 @@
                                         >
                                             <span
                                                 class="inline-flex py-3 px-6 w-full justify-between"
-                                                >Date
+                                                >Last Name
                                             </span>
                                         </th>
 
@@ -51,16 +51,17 @@
                                         >
                                             <span
                                                 class="inline-flex py-3 px-6 w-full justify-between"
-                                                >Time
+                                                >Middle Initial
                                             </span>
                                         </th>
+
                                         <th
                                             scope="col"
                                             class="w-3/12 text-xs font-semibold tracking-wider text-left text-white uppercase"
                                         >
                                             <span
                                                 class="inline-flex py-3 px-6 w-full justify-between"
-                                                >Status
+                                                >Gender
                                             </span>
                                         </th>
                                     </tr>
@@ -69,33 +70,41 @@
                                     class="bg-white divide-y divide-gray-700"
                                 >
                                     <tr
-                                        v-for="appointment in appointments.data"
-                                        :key="appointment.id"
+                                        v-for="patient in patients.data"
+                                        :key="patient.id"
                                     >
                                         <td
                                             class="py-4 px-6 text-sm text-gray-800 whitespace-nowrap"
-                                            v-text="appointment.reason"
+                                            v-text="patient.first_name"
                                         />
                                         <td
                                             class="py-4 px-6 text-sm text-gray-800 whitespace-nowrap"
-                                            v-text="
-                                                formatDate(
-                                                    appointment.appointment_date
-                                                )
-                                            "
+                                            v-text="patient.last_name"
                                         />
                                         <td
                                             class="py-4 px-6 text-sm text-gray-800 whitespace-nowrap"
-                                            v-text="
-                                                tConvert(
-                                                    appointment.appointment_time
-                                                )
-                                            "
+                                            v-text="patient.middle_initial"
                                         />
-                                        <td>
-                                            <status-tag
-                                                :status="appointment.status"
-                                            />
+
+                                        <td
+                                            class="py-4 px-6 text-sm text-gray-800 whitespace-nowrap"
+                                        >
+                                            <div class="flex justify-between">
+                                                {{ patient.gender }}
+
+                                                <small-button
+                                                    class="ml-3"
+                                                    color="blue"
+                                                    icon="fas fa-eye fa-lg"
+                                                    label="View"
+                                                    type="button"
+                                                    @click="
+                                                        toggleInformationModal(
+                                                            patient
+                                                        )
+                                                    "
+                                                />
+                                            </div>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -104,33 +113,57 @@
                     </div>
                 </div>
             </div>
-        </div> -->
-        <!-- <pagination class="mt-10" :links="appointments.links" /> -->
+        </div>
+        <pagination class="mt-10" :links="patients.links" />
+
+        <information-modal
+            v-if="showInformationModal"
+            @toggle="toggleInformationModal"
+        />
     </dashboard-layout>
 </template>
 
 <script>
 import DashboardLayout from "@/Layouts/DashboardLayout";
+import InformationModal from "@/Components/Common/InformationModal";
+import useModal from "@/composables/useModal";
 import Pagination from "@/Components/Common/Pagination";
 import useFormatter from "@/Components/composables/useFormatter";
 import BaseButton from "@/Components/Common/BaseButton";
+import SmallButton from "@/Components/Common/SmallButton";
 import StatusTag from "@/Components/Common/StatusTag";
+import { provide, toRefs } from "vue";
 
 export default {
     components: {
+        InformationModal,
         DashboardLayout,
         Pagination,
         StatusTag,
         BaseButton,
+        SmallButton,
     },
     props: {
-        patients: Object,
+        patients: Array,
     },
     setup(props) {
         const { formatDate } = useFormatter();
+        const { showModal, toggleModal } = useModal();
+
+        const {
+            showModal: showInformationModal,
+            toggleModal: toggleInformationModal,
+            selectedValue: patient,
+        } = useModal();
+        provide("toggleInformationModal", toggleInformationModal);
+        provide("patient", patient);
 
         return {
             formatDate,
+            showModal,
+            toggleModal,
+            showInformationModal,
+            toggleInformationModal,
 
             params: { search: null },
         };

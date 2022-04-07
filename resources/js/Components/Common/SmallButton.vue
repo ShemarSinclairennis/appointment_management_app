@@ -6,7 +6,7 @@
             'bg-purple-300': color == 'purple',
             'bg-red-400': color === 'red',
         }"
-        class="hover:bg-gray text-white text-sm font-bold p-2 rounded-lg"
+        class="hover:bg-green-300 text-white text-sm font-bold p-2 rounded-lg"
         :type="type"
     >
         <div class="flex">

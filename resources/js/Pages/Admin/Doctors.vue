@@ -19,7 +19,7 @@
             />
         </div>
 
-        <!-- <div class="overflow-hidden bg-white shadow-md sm:rounded-lg">
+        <div class="overflow-hidden bg-white shadow-md sm:rounded-lg">
             <div class="flex flex-col">
                 <div class="overflow-x-auto -my-2 sm:-mx-6 lg:-mx-8">
                     <div
@@ -39,7 +39,7 @@
                                         >
                                             <span
                                                 class="inline-flex py-3 px-6 w-full justify-between"
-                                                >Reason
+                                                >First Name
                                             </span>
                                         </th>
                                         <th
@@ -48,7 +48,7 @@
                                         >
                                             <span
                                                 class="inline-flex py-3 px-6 w-full justify-between"
-                                                >Date
+                                                >Last Name
                                             </span>
                                         </th>
 
@@ -58,16 +58,17 @@
                                         >
                                             <span
                                                 class="inline-flex py-3 px-6 w-full justify-between"
-                                                >Time
+                                                >Middle Initial
                                             </span>
                                         </th>
+
                                         <th
                                             scope="col"
                                             class="w-3/12 text-xs font-semibold tracking-wider text-left text-white uppercase"
                                         >
                                             <span
                                                 class="inline-flex py-3 px-6 w-full justify-between"
-                                                >Status
+                                                >Practice
                                             </span>
                                         </th>
                                     </tr>
@@ -76,33 +77,41 @@
                                     class="bg-white divide-y divide-gray-700"
                                 >
                                     <tr
-                                        v-for="appointment in appointments.data"
-                                        :key="appointment.id"
+                                        v-for="doctor in doctors.data"
+                                        :key="doctor.id"
                                     >
                                         <td
                                             class="py-4 px-6 text-sm text-gray-800 whitespace-nowrap"
-                                            v-text="appointment.reason"
+                                            v-text="doctor.first_name"
                                         />
                                         <td
                                             class="py-4 px-6 text-sm text-gray-800 whitespace-nowrap"
-                                            v-text="
-                                                formatDate(
-                                                    appointment.appointment_date
-                                                )
-                                            "
+                                            v-text="doctor.last_name"
                                         />
                                         <td
                                             class="py-4 px-6 text-sm text-gray-800 whitespace-nowrap"
-                                            v-text="
-                                                tConvert(
-                                                    appointment.appointment_time
-                                                )
-                                            "
+                                            v-text="doctor.middle_initial"
                                         />
-                                        <td>
-                                            <status-tag
-                                                :status="appointment.status"
-                                            />
+
+                                        <td
+                                            class="py-4 px-6 text-sm text-gray-800 whitespace-nowrap"
+                                        >
+                                            <div class="flex justify-between">
+                                                {{ doctor.practice }}
+
+                                                <small-button
+                                                    class="ml-3"
+                                                    color="red"
+                                                    icon="fas fa-trash-alt fa-lg"
+                                                    label="Remove"
+                                                    type="button"
+                                                    @click="
+                                                        deleteDoctor({
+                                                            doctor,
+                                                        })
+                                                    "
+                                                />
+                                            </div>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -111,8 +120,9 @@
                     </div>
                 </div>
             </div>
-        </div> -->
-        <!-- <pagination class="mt-10" :links="appointments.links" /> -->
+        </div>
+        <pagination class="mt-10" :links="doctors.links" />
+
         <doctor-modal v-if="showDoctorModal" @toggle="toggleDoctorModal" />
     </dashboard-layout>
 </template>
@@ -120,15 +130,19 @@
 <script>
 import DashboardLayout from "@/Layouts/DashboardLayout";
 import Pagination from "@/Components/Common/Pagination";
-import useFormatter from "@/Components/composables/useFormatter";
+import SmallButton from "@/Components/Common/SmallButton";
 import BaseButton from "@/Components/Common/BaseButton";
 import StatusTag from "@/Components/Common/StatusTag";
 import DoctorModal from "@/Components/DoctorModal";
 import useModal from "@/composables/useModal";
+import { Link } from "@inertiajs/inertia-vue3";
+import { Inertia } from "@inertiajs/inertia";
 import { provide, toRefs } from "vue";
 
 export default {
     components: {
+        Link,
+        SmallButton,
         DashboardLayout,
         Pagination,
         StatusTag,
@@ -136,11 +150,11 @@ export default {
         DoctorModal,
     },
     props: {
-        doctors: Object,
+        doctors: Array,
     },
     setup(props) {
         const { showModal, toggleModal } = useModal();
-        const { formatDate } = useFormatter();
+
         const {
             showModal: showDoctorModal,
             toggleModal: toggleDoctorModal,
@@ -148,14 +162,19 @@ export default {
 
             mode,
         } = useModal();
-
+        function deleteDoctor(doctor) {
+            Inertia.visit("register/deleteDoctor", {
+                method: "delete",
+                data: { doctor: doctor },
+            });
+        }
         provide("toggleDoctorModal", toggleDoctorModal);
         provide("doctor", doctor);
 
         provide("mode", mode);
 
         return {
-            formatDate,
+            deleteDoctor,
             showModal,
             toggleModal,
             showDoctorModal,

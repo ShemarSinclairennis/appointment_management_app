@@ -18,10 +18,7 @@ class PatientController extends Controller
     {
        
             
-        return Inertia::render("Doctor/Patients", [
-            "patients"=> Patient::all(),
-                
-        ]);
+        return Inertia::render("Doctor/Patients", ["patients" => Patient::where('id','!=','')->paginate(10)]);
     }
 
     /**
