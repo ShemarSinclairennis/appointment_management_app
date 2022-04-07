@@ -50,6 +50,7 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'user_type' =>'patient',
             'password' => Hash::make($request->password),
+            'ip_address' =>request()->ip(),
            
         ]);
 
@@ -84,6 +85,7 @@ class RegisteredUserController extends Controller
         $doctor->last_name = $request->last_name;
         $doctor->middle_initial = $request->middle_initial;
         $doctor->practice = $request->practice;
+        $doctor->ip_address = request()->ip();
      
         $doctor->save();
 

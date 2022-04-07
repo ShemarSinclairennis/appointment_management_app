@@ -82,6 +82,7 @@ class PatientController extends Controller
         $patient->emergency_name = $request->emergency_name;
         $patient->emergency_home_phone = $request->emergency_home_phone;
         $patient->emergency_cell_phone = $request->emergency_cell_phone;
+        $patient->ip_address = request()->ip();
         $patient->save();
         return redirect()->route('patient.patientInformation');
     }

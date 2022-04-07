@@ -51,6 +51,7 @@ class AppointmentController extends Controller
         $appointment->appointment_time = $request->appointment_time;
         $appointment->patient_id = Auth::id();
         $appointment->status ='Waiting';
+        $appointment->ip_address = request()->ip();
         $appointment->save();
         return back()->withSuccess("Appointment created");
     }

@@ -28,6 +28,7 @@ class Patient extends Model
         'emergency_name',
         'emergency_home_phone',
         'emergency_cell_phone',
+        'ip_address'
 
     ];
 }

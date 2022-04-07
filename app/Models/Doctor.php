@@ -15,5 +15,6 @@ class Doctor extends Model
         'last_name',
         'middle_initial',
         'practice',
+        'ip_address'
     ];
 }
