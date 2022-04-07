@@ -3,8 +3,11 @@
         <div class="flex">
             <user-card class="mr-12" />
             <div class="mr-12">
+                <div class="text-md text-gray-700 mb-1">
+                    Upcoming Appointment:
+                </div>
                 <date-card
-                    class="mb-8"
+                    class="mb-4"
                     day="25"
                     month="APRIL"
                     :time="timeConvert(upcoming_appointment.appointment_time)"
@@ -21,10 +24,15 @@
                     </base-card>
 
                     <base-card class="bg-blue-800 h-28 w-32">
-                        <div class="grid place-items-center mt-2">
-                            <i class="fas fa-plus text-6xl text-white"></i>
+                        <div class="grid place-items-center mt-1">
+                            <div class="text-xs text-white">Current Date:</div>
+                            <div class="text-4xl font-bold text-white">
+                                {{ currentDate()[0] }}
+                            </div>
 
-                            <p class="text-xs text-white">Add Appointments</p>
+                            <p class="text-md text-white">
+                                {{ currentDate()[1] }}
+                            </p>
                         </div>
                     </base-card>
                 </div>
@@ -107,6 +115,28 @@ export default {
     },
     setup(props) {
         const { formatDate } = useFormatter();
+        const months = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+        ];
+        function currentDate() {
+            const current = new Date();
+            console.log(current);
+            const month = months[current.getMonth()];
+            const day = (current.getDate() < 10 ? "0" : "") + current.getDate();
+            const date = [day, month];
+            return date;
+        }
 
         function timeConvert(time) {
             // Check correct time format and split into components
@@ -125,7 +155,7 @@ export default {
 
         return {
             formatDate,
-
+            currentDate,
             timeConvert,
         };
     },

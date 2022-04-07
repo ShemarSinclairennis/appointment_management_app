@@ -11,6 +11,7 @@
                 <!-- First Name Field-->
                 <base-input
                     v-model="form.first_name"
+                    :error="form.errors.first_name"
                     label="First Name"
                     id="first_name"
                     class="w-full"
@@ -19,6 +20,7 @@
                 <!-- Last Name Field-->
                 <base-input
                     v-model="form.last_name"
+                    :error="form.errors.last_name"
                     label="Last Name"
                     id="last_name"
                     class="w-full"
@@ -26,6 +28,7 @@
                 <!-- Middle Initial  Field-->
                 <base-input
                     v-model="form.middle_initial"
+                    :error="form.errors.middle_initial"
                     label="Middle Initial"
                     id="middile_intial"
                     class="w-full"
@@ -43,6 +46,7 @@
                 <!-- Gender Field-->
                 <base-input
                     v-model="form.gender"
+                    :error="form.errors.gender"
                     class="w-full"
                     label="Gender"
                     type="select"
@@ -56,6 +60,7 @@
                 <!-- Date of Birth  Field-->
                 <base-input
                     v-model="form.dob"
+                    :error="form.errors.dob"
                     class="w-full"
                     label="Date of Birth"
                     type="date"
@@ -66,6 +71,7 @@
                 <!-- Street Address Field-->
                 <base-input
                     v-model="form.street_address"
+                    :error="form.errors.street_address"
                     label="Street Address"
                     id="street_address"
                     class="w-full"
@@ -74,6 +80,7 @@
                 <!-- City Field-->
                 <base-input
                     v-model="form.city"
+                    :error="form.errors.city"
                     label="City"
                     id="city"
                     class="w-full"
@@ -81,6 +88,7 @@
                 <!-- Parish  Field-->
                 <base-input
                     v-model="form.parish"
+                    :error="form.errors.parish"
                     class="w-full"
                     label="Parish"
                     type="select"
@@ -101,6 +109,7 @@
                 <!-- Home Phone Field-->
                 <base-input
                     v-model="form.home_phone"
+                    :error="form.errors.home_phone"
                     label="Home Phone Number"
                     id="home_phone"
                     class="w-full"
@@ -109,6 +118,7 @@
                 <!-- Cell Phone  Field-->
                 <base-input
                     v-model="form.cell_phone"
+                    :error="form.errors.cell_phone"
                     label="Cell Phone Number"
                     id="cell_phone"
                     class="w-full"
@@ -116,6 +126,7 @@
                 <!-- Email  Field-->
                 <base-input
                     v-model="form.email"
+                    :error="form.errors.email"
                     label="Email"
                     id="email"
                     class="w-full"
@@ -125,6 +136,7 @@
                 <!-- Occupation Field-->
                 <base-input
                     v-model="form.occupation"
+                    :error="form.errors.occupation"
                     label="Occupation"
                     id="occupation"
                     class="w-full"
@@ -133,6 +145,7 @@
                 <!-- Employer Field-->
                 <base-input
                     v-model="form.employer"
+                    :error="form.errors.employer"
                     label="Employer"
                     id="employer"
                     class="w-full"
@@ -140,6 +153,7 @@
                 <!-- Employer Number  Field-->
                 <base-input
                     v-model="form.employer_number"
+                    :error="form.errors.employer_number"
                     label="Employer Number"
                     id="employer_number"
                     class="w-full"
@@ -149,6 +163,7 @@
                 <!-- Emergency Contact Name Field-->
                 <base-input
                     v-model="form.emergency_name"
+                    :error="form.errors.emergency_name"
                     label="Emergency Contact Name"
                     id="emergency_name"
                     class="w-full"
@@ -157,6 +172,7 @@
                 <!-- Emergency Home Phone Field-->
                 <base-input
                     v-model="form.emergency_home_phone"
+                    :error="form.errors.emergency_home_phone"
                     label="Emergency Home Phone"
                     id="emergency_home_phone"
                     class="w-full"
@@ -164,6 +180,7 @@
                 <!-- Emergency Cell Phone Field-->
                 <base-input
                     v-model="form.emergency_cell_phone"
+                    :error="form.errors.emergency_cell_phone"
                     label="Emergency Cell Phone"
                     id="'emergency_cell_phone"
                     class="w-full"
@@ -198,6 +215,7 @@ export default {
         BaseButton,
     },
     props: {
+        patient: Object,
         mode: String,
     },
     data() {
@@ -244,6 +262,10 @@ export default {
     },
     methods: {
         submit() {
+            if (this.mode === "Edit") {
+                this.form.put(route("patient.update", this.patient?.id));
+                return;
+            }
             this.form.post(route("patient.store"), {
                 onSuccess: () => {
                     this.form.reset();

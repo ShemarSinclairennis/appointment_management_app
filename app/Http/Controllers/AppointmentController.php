@@ -39,7 +39,12 @@ class AppointmentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   $request->validate([
+        'reason' => 'required|string|max:30',
+        'appointment_date' => 'required',
+        'appointment_time'=>'required',
+        
+    ]);
         $appointment = new Appointment;
         $appointment->reason = $request->reason;
         $appointment->appointment_date = $request->appointment_date;

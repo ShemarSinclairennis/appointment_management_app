@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Doctor;
+use App\Models\Appointment;
+use App\Models\Patient;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -68,9 +70,9 @@ class DoctorController extends Controller
      * @param  \App\Models\Doctor  $doctor
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Doctor $doctor)
+    public function update(Request $request, Appointment $appointment)
     {
-        //
+        
     }
 
     /**
@@ -82,5 +84,13 @@ class DoctorController extends Controller
     public function destroy(Doctor $doctor)
     {
         //
+    }
+
+    public function confirmAppointment(Request $request){
+  dd($request);
+        // $appointment->status = "Confirmed";
+        // $appointment->save();
+        // return back()->withSuccess("Appointment confirmed");
+
     }
 }

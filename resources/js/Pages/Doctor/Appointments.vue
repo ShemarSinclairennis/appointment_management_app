@@ -104,24 +104,31 @@
                                                 v-else
                                                 class="flex justify-end mr-9"
                                             >
-                                                <round-button
+                                                <small-button
                                                     color="green"
                                                     icon="fas fa-check-circle fa-lg"
-                                                    alt="confirm"
+                                                    label="Confirm"
                                                     type="button"
+                                                    @click="
+                                                        confirmAppointment({
+                                                            appointment,
+                                                        })
+                                                    "
                                                 />
-                                                <round-button
+                                                <small-button
                                                     class="ml-5"
                                                     color="purple"
                                                     icon="fas fa-clock fa-lg"
                                                     type="button"
+                                                    label="Reschedule"
                                                 />
 
-                                                <round-button
+                                                <small-button
                                                     class="ml-5"
                                                     color="red"
                                                     icon="fas fa-times-circle fa-lg"
                                                     type="button"
+                                                    label="Decline"
                                                 />
                                             </div>
                                         </td>
@@ -146,7 +153,7 @@ import DashboardLayout from "@/Layouts/DashboardLayout";
 import Pagination from "@/Components/Common/Pagination";
 import useFormatter from "@/Components/composables/useFormatter";
 import BaseButton from "@/Components/Common/BaseButton";
-import RoundButton from "@/Components/Common/RoundButton";
+import SmallButton from "@/Components/Common/SmallButton";
 import StatusTag from "@/Components/Common/StatusTag";
 import AppointmentModal from "@/Components/AppointmentModal";
 import useModal from "@/composables/useModal";
@@ -158,7 +165,7 @@ export default {
         Pagination,
         StatusTag,
         BaseButton,
-        RoundButton,
+        SmallButton,
         AppointmentModal,
     },
     props: {
@@ -190,7 +197,7 @@ export default {
             return time.join(""); // return adjusted time or original string
         }
 
-        function confirm(appointment) {}
+        function confirmAppointment(appointment) {}
         function reschedule(appointment) {}
         function decline(appointment) {}
 
@@ -200,6 +207,7 @@ export default {
         provide("mode", mode);
 
         return {
+            confirmAppointment,
             formatDate,
             showModal,
             toggleModal,

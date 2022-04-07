@@ -44,7 +44,27 @@ class PatientController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    { $request->validate([
+        'first_name' => 'required|string|max:255',
+        'last_name' => 'required|string|max:255',
+        'middle_initial'=>'required|string|max:1',
+        'gender'=>'required',
+        'dob'=>'required',
+        'street_address' => 'required|string|max:255',
+        'city' => 'required|string|max:255',
+        'parish'=>'required',
+        'home_phone'=>'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+        'cell_phone'=>'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+        'email' => 'required|string|email|max:255|unique:users',
+        'occupation' => 'required|string|max:50',
+        'employer' => 'required|string|max:50',
+        'employer_number'=>'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+        
+        'emergency_name' => 'required|string|max:255',
+        'emergency_home_phone'=>'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+        'emergency_cell_phone'=>'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+        
+    ]);
         
         $patient = new Patient;
         $patient->patient_id = Auth::id();
@@ -100,7 +120,11 @@ class PatientController extends Controller
      */
     public function edit(Patient $patient)
     {
-        //
+        
+        return Inertia::render("Forms/Patientform", [
+          "patient"=> $patient,
+            "mode" => "Edit",
+        ]);
     }
 
     /**

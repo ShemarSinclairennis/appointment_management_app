@@ -1,12 +1,12 @@
 <template>
     <dashboard-layout :header-caption="Settings" header="Settings">
-        <a :href="route('register.deleteUser')">
-            <base-button
-                class="mb-4 mr-4"
-                color="red"
-                icon="fas fa-plus"
-                label="Delete Account" /></a
-    ></dashboard-layout>
+        <base-button
+            class="mb-4 mr-4"
+            color="red"
+            icon="fas fa-plus"
+            label="Delete Account"
+            @click="deleteUser()"
+    /></dashboard-layout>
 </template>
 
 <script>
@@ -20,7 +20,7 @@ export default {
     setup() {
         function deleteUser() {
             console.log("delete user");
-            return route("register.deleteUser");
+            window.location.href = route("register.deleteUser");
         }
         return {
             deleteUser,

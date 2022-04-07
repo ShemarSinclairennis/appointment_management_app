@@ -1,22 +1,14 @@
 <template>
     <dashboard-layout :header-caption="Information" header="Information">
         <div class="flex justify-end">
-            <Link :href="route('patient.create')">
+            <Link :href="route('patient.edit', patient)">
                 <base-button
-                    v-if="!patient.id"
                     class="mb-4 mr-4"
                     color="blue"
-                    icon="fas fa-plus"
-                    label="Add Information"
+                    icon="fas fa-edit"
+                    label="Edit Information"
                 />
             </Link>
-            <base-button
-                v-if="patient.id"
-                class="mb-4 mr-4"
-                color="blue"
-                icon="fas fa-edit"
-                label="Edit Information"
-            />
         </div>
         <div class="mb-8">
             <div class="mb-4">

@@ -10,12 +10,14 @@
             <div class="grid grid-cols-2 gap-x-4">
                 <base-input
                     v-model="form.appointment_date"
+                    :error="form.errors.appointment_date"
                     class="w-full"
                     label="Date"
                     type="date"
                 />
                 <base-input
                     v-model="form.appointment_time"
+                    :error="form.errors.appointment_time"
                     class="w-full"
                     label="Time"
                     type="time"
@@ -23,6 +25,7 @@
             </div>
             <base-input
                 v-model="form.reason"
+                :error="form.errors.reason"
                 class="w-full"
                 label="Reason"
                 type="textarea"

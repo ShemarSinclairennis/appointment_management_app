@@ -66,6 +66,11 @@ Route::get("register/deleteUser", [
     "deleteUser",
 ])->name("register.deleteUser");
 
+Route::put("doctor/confirm", [
+    DoctorController::class,
+    "confirmAppointment",
+])->name("doctor.confirm");
+
 
 
 require __DIR__.'/auth.php';
