@@ -8,7 +8,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\PatientController;
-
+use App\Mail\AppointmentMail;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 
 /*
@@ -72,5 +73,10 @@ Route::put("doctor/confirm", [
 ])->name("doctor.confirm");
 
 
+//Route for mailing
+Route::get('/email', function(){
+    Mail::to('shemar.ennis@gmail.com')->send(new AppointmentMail);
+    return new AppointmentMail();
+});
 
 require __DIR__.'/auth.php';
