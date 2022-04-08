@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\AppointmentMail;
 use App\Models\Doctor;
 use App\Models\Appointment;
 use App\Models\Patient;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
+
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Models\User;
@@ -90,16 +89,5 @@ class DoctorController extends Controller
         //
     }
 
-    public function confirmAppointment(Request $request){
-//   dd('hello');
-        $id=array_column($request->appointment,'id');
-        $appointment=Appointment::where('id',$id)->first();
-        $appointment->status="Confirmed";
-        $appointment->save();
-        $email= Auth::user()->email;
-        $data =['id'=>$id];
-        Mail::to($email)->send(new AppointmentMail,$data);
-        return back()->withSuccess("Appointment confirmed");
-
-    }
+    
 }

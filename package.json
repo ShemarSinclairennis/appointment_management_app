@@ -32,6 +32,7 @@
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^6.1.1",
+        "@smartweb/vue-flash-message": "^0.6.10",
         "@tinymce/tinymce-vue": "^4.0.7"
     }
 }

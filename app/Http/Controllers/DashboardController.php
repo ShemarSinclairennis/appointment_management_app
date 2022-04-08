@@ -18,11 +18,25 @@ class DashboardController extends Controller
     public function index()
 
     {
+        $empty_array= [ 
+        "id" => 0,
+        "patient_id" => 0,
+        "reason" => "No Upcoming Appointment",
+        "appointment_date" => "0000-00-00",
+        "appointment_time" => "--:--:--",
+        "status" => "Null",
+        ];
+
         $id = Auth::id();
         $appointments_count=  Appointment::where('patient_id',$id)->count();
         $appointments= Appointment::where('patient_id',$id)->orderBy('appointment_date','desc')->limit(5)->get();
         $upcoming_appointment = Appointment::where('patient_id',$id)->orderBy('appointment_date','desc')->first();
-        // dd($appointments->toArray());
+
+        if(empty($upcoming_appointment)){
+            $upcoming_appointment=$empty_array;
+            
+        }
+         
         return Inertia::render("Patient/Dashboard", [
             'appointments' => $appointments,
             'appointments_count'=>$appointments_count,

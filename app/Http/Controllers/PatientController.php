@@ -84,7 +84,7 @@ class PatientController extends Controller
         $patient->emergency_cell_phone = $request->emergency_cell_phone;
         $patient->ip_address = request()->ip();
         $patient->save();
-        return redirect()->route('patient.patientInformation');
+        return redirect()->route('patient.patientInformation')->withSuccess("Your information has been added.");
     }
 
     /**
@@ -154,7 +154,7 @@ class PatientController extends Controller
         $patient->emergency_home_phone = $request->emergency_home_phone;
         $patient->emergency_cell_phone = $request->emergency_cell_phone;
         $patient->save();
-        return redirect()->route('patient.patientInformation');
+        return redirect()->route('patient.patientInformation')->withSuccess("Your information has been updated");
     }
 
     /**

@@ -93,7 +93,7 @@ class RegisteredUserController extends Controller
 
         
 
-        return back()->withSuccess("Doctor added to the system");
+        return back()->withSuccess("Doctor has added to the system");
     }
     
     public function deleteUser (){
@@ -102,7 +102,7 @@ class RegisteredUserController extends Controller
         User::where(['id'=>$id])->delete();
         Patient::where(['patient_id' => $id])->delete();
         Appointment::where(['patient_id' => $id])->delete();
-        return redirect()->route('welcome');
+        return redirect()->route('welcome')->withSuccess("User has been successfully deleted");
 
     }
     public function deleteDoctor (Request $request){
@@ -110,7 +110,7 @@ class RegisteredUserController extends Controller
         $id = array_column($request->doctor,'doctor_id');
         User::where(['id'=>$id])->delete();
         Doctor::where(['doctor_id' => $id])->delete();
-        return back()->withSuccess("Doctor removed");
+        return back()->withSuccess("Doctor removed")->withSuccess("Doctor has been successfully deleted");
 
     }
 }

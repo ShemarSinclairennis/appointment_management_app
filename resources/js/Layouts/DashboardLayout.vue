@@ -7,19 +7,21 @@
             <slot />
         </dashboard-content>
 
-        <flash-messages /> 
+        <flash-messages />
     </div>
 </template>
 
 <script>
 import DashboardSidebar from "@/Components/Sidebar.vue";
 import DashboardContent from "@/Components/DashboardContent.vue";
+import FlashMessages from "@/Components/FlashMessages";
 
 import { Head, usePage } from "@inertiajs/inertia-vue3";
 import { provide, ref, toRefs } from "vue";
 
 export default {
     components: {
+        FlashMessages,
         DashboardContent,
         DashboardSidebar,
         Head,

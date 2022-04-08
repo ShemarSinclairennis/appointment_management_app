@@ -7,6 +7,9 @@ use App\Models\Patient;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AppointmentMail;
+use App\Mail\DeclineMail;
 
 class AppointmentController extends Controller
 {
@@ -18,7 +21,7 @@ class AppointmentController extends Controller
     public function index()
     {
         return Inertia::render("Doctor/Appointments", [
-            'appointments' => Appointment::where('status','!=','declined')->paginate(10)
+            'appointments' => Appointment::where('status','!=','')->paginate(10)
         ]);
     }
 
@@ -102,7 +105,31 @@ class AppointmentController extends Controller
     public function destroy(Appointment $appointment)
     {
        Appointment::where('id',$appointment->id)->first()->delete();
-       return back()->withSuccess("Appointment removed");
+       return back()->withSuccess("Appointment has been removed");
        
+    }
+
+    public function confirmAppointment(Request $request){
+                $id=array_column($request->appointment,'id');
+                $appointment=Appointment::where('id',$id)->first();
+                $appointment->status="Confirmed";
+                $appointment->save();
+                $email= Auth::user()->email;
+                $data =['id'=>$id];
+                Mail::to($email)->send(new AppointmentMail,$data);
+                return back()->withSuccess("Appointment has been confirmed");
+        
+            }
+
+    public function declineAppointment(Request $request){
+        $id=array_column($request->appointment,'id');
+                $appointment=Appointment::where('id',$id)->first();
+                $appointment->status="Declined";
+                $appointment->save();
+                $email= Auth::user()->email;
+                $data =['id'=>$id];
+                Mail::to($email)->send(new DeclineMail,$data);
+                return back()->withSuccess("Appointment has been declined");
+
     }
 }

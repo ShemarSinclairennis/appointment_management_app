@@ -116,6 +116,7 @@ export default {
     setup(props) {
         const { formatDate } = useFormatter();
         const months = [
+            "-- --",
             "January",
             "February",
             "March",
@@ -132,7 +133,7 @@ export default {
         function currentDate() {
             const current = new Date();
             console.log(current);
-            const month = months[current.getMonth()];
+            const month = months[current.getMonth() + 1];
             const day = (current.getDate() < 10 ? "0" : "") + current.getDate();
             const date = [day, month];
             return date;
@@ -140,6 +141,9 @@ export default {
 
         function timeConvert(time) {
             // Check correct time format and split into components
+            if (time == "--:--:--") {
+                return time;
+            }
             time = time
                 .toString()
                 .match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];

@@ -122,6 +122,34 @@
                                                 </Link>
                                             </div>
                                             <div
+                                                v-else-if="
+                                                    appointment.status ==
+                                                    'Declined'
+                                                "
+                                                class="flex"
+                                            >
+                                                <status-tag
+                                                    :status="appointment.status"
+                                                />
+                                                <Link
+                                                    method="delete"
+                                                    :href="
+                                                        route(
+                                                            'appointments.destroy',
+                                                            appointment
+                                                        )
+                                                    "
+                                                >
+                                                    <small-button
+                                                        class="ml-3"
+                                                        color="red"
+                                                        icon="fas fa-trash-alt fa-lg"
+                                                        label="Remove"
+                                                        type="button"
+                                                    />
+                                                </Link>
+                                            </div>
+                                            <div
                                                 v-else
                                                 class="flex justify-end mr-9"
                                             >
@@ -150,6 +178,11 @@
                                                     icon="fas fa-times-circle fa-lg"
                                                     type="button"
                                                     label="Decline"
+                                                    @click="
+                                                        declineAppointment({
+                                                            appointment,
+                                                        })
+                                                    "
                                                 />
                                             </div>
                                         </td>
@@ -210,16 +243,22 @@ export default {
         }
 
         function confirmAppointment(appointment) {
-            Inertia.visit("doctor/confirm", {
+            Inertia.visit("appointment/confirm", {
                 method: "put",
                 data: { appointment: appointment },
             });
         }
 
         function reschedule(appointment) {}
-        function decline(appointment) {}
+        function declineAppointment(appointment) {
+            Inertia.visit("appointment/declined", {
+                method: "put",
+                data: { appointment: appointment },
+            });
+        }
 
         return {
+            declineAppointment,
             confirmAppointment,
             formatDate,
             tConvert,

@@ -4,7 +4,7 @@
         @click.self="emitToggleEvent"
     >
         <div
-            class="bg-white p-8 mx-auto w-full min-h-full md:rounded-3xl md:my-8"
+            class="bg-white p-8 mx-auto w-3/5 min-h-3/5 md:rounded-3xl md:my-8"
         >
             <div class="flex justify-between items-center mb-6">
                 <div>

@@ -5,6 +5,7 @@
             'bg-green-300': color === 'green',
             'bg-purple-400': color === 'purple',
             'bg-gray-700': color === 'gray',
+            'bg-red': color === 'red',
         }"
     >
         <i class="mr-2" :class="icon" v-if="icon"></i>

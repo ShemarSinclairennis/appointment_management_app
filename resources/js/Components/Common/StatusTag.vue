@@ -31,6 +31,9 @@ export default {
             if (this.statusRegularized === "waiting") {
                 return "fas fa-clock";
             }
+            if (this.statusRegularized === "declined") {
+                return "fas fa-times-circle";
+            }
         },
 
         color() {
@@ -44,6 +47,9 @@ export default {
 
             if (this.statusRegularized === "waiting") {
                 return "gray";
+            }
+            if (this.statusRegularized === "declined") {
+                return "red";
             }
         },
     },

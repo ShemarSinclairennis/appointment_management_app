@@ -72,10 +72,15 @@ Route::delete("register/deleteDoctor", [
     "deleteDoctor",
 ])->name("register.deleteDoctor");
 
-Route::put("doctor/confirm", [
-    DoctorController::class,
+Route::put("appointment/confirm", [
+    AppointmentController::class,
     "confirmAppointment",
-])->name("doctor.confirm");
+])->name("appointment.confirm");
+
+Route::put("appointment/declined", [
+    AppointmentController::class,
+    "declineAppointment",
+])->name("appointment.declined");
 
 
 
