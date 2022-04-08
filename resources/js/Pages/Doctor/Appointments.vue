@@ -224,7 +224,8 @@ export default {
     props: {
         appointments: Object,
     },
-    setup(props) {
+
+    data() {
         const { formatDate } = useFormatter();
 
         function tConvert(time) {

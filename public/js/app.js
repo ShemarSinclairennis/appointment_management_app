@@ -25591,7 +25591,7 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     appointments: Object
   },
-  setup: function setup(props) {
+  data: function data() {
     var _useFormatter = (0,_Components_composables_useFormatter__WEBPACK_IMPORTED_MODULE_2__["default"])(),
         formatDate = _useFormatter.formatDate;
 
@@ -28859,14 +28859,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "search",
         "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
-          return $setup.params.search = $event;
+          return $data.params.search = $event;
         }),
         "aria-label": "Search",
         placeholder: "Search...",
         "class": "block w-full rounded-md border-gray-700 shadow-sm focus:ring-blue-700 focus:border-blue-700 sm:text-sm"
       }, null, 512
       /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.params.search]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", _hoisted_10, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.appointments.data, function (appointment) {
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.params.search]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", _hoisted_10, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.appointments.data, function (appointment) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
           key: appointment.id
         }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
@@ -28876,12 +28876,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         /* PROPS */
         , _hoisted_11), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
           "class": "py-4 px-6 text-sm text-gray-800 whitespace-nowrap",
-          textContent: (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.formatDate(appointment.appointment_date))
+          textContent: (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.formatDate(appointment.appointment_date))
         }, null, 8
         /* PROPS */
         , _hoisted_12), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
           "class": "py-4 px-6 text-sm text-gray-800 whitespace-nowrap",
-          textContent: (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.tConvert(appointment.appointment_time))
+          textContent: (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.tConvert(appointment.appointment_time))
         }, null, 8
         /* PROPS */
         , _hoisted_13), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [appointment.status == 'Confirmed' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_status_tag, {
@@ -28934,7 +28934,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           label: "Confirm",
           type: "button",
           onClick: function onClick($event) {
-            return $setup.confirmAppointment({
+            return $data.confirmAppointment({
               appointment: appointment
             });
           }
@@ -28947,7 +28947,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           type: "button",
           label: "Decline",
           onClick: function onClick($event) {
-            return $setup.declineAppointment({
+            return $data.declineAppointment({
               appointment: appointment
             });
           }
@@ -51587,10 +51587,10 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 /***/ }),
 
-/***/ "./resources/sass/app.scss":
-/*!*********************************!*\
-  !*** ./resources/sass/app.scss ***!
-  \*********************************/
+/***/ "./resources/css/app.css":
+/*!*******************************!*\
+  !*** ./resources/css/app.css ***!
+  \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -57788,7 +57788,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
 /******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/js/app.js")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/sass/app.scss")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/css/app.css")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

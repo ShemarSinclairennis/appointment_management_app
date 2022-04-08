@@ -16,7 +16,7 @@ class DoctorMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($request->yser() && $request->user()->user_type != 'doctor')
+        if ($request->user() && $request->user()->user_type != 'doctor')
         {
             return response(view('unauthorized')->with('role','DOCTOR'));
     }

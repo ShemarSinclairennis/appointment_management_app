@@ -34,55 +34,167 @@ Route::get('/', function () {
 
 
 
+//Admin Middleware
+Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function () {
 
-Route::resource("appointments", AppointmentController::class)->except([
-    "edit",
-    "create",
-])->middleware(['auth', 'verified']);
+    Route::delete("register/deleteDoctor", [
+        RegisteredUserController::class,
+        "deleteDoctor",
+    ])->name("register.deleteDoctor")->middleware(['auth', 'verified']);
 
-Route::resource("dashboard", DashboardController::class)->except([
-    "edit",
-    "create",
-])->middleware(['auth', 'verified']);
+    Route::post("register/storeDoctor", [
+        RegisteredUserController::class,
+        "storeDoctor",
+    ])->name("register.storeDoctor")->middleware(['auth', 'verified']);
 
-Route::resource("settings", SettingController::class)->except([
-    "edit",
-    "create",
-])->middleware(['auth', 'verified']);
-
-Route::resource("patient", PatientController::class)->except(["show"])->middleware(['auth', 'verified']);
-Route::resource("doctors", DoctorController::class)->middleware(['auth', 'verified']);
-Route::get("patient/information", [
-    PatientController::class,
-    "patientInformation",
-])->name("patient.patientInformation");
-
-Route::post("register/storeDoctor", [
-    RegisteredUserController::class,
-    "storeDoctor",
-])->name("register.storeDoctor");
-
-Route::get("register/deleteUser", [
-    RegisteredUserController::class,
-    "deleteUser",
-])->name("register.deleteUser");
-
-Route::delete("register/deleteDoctor", [
-    RegisteredUserController::class,
-    "deleteDoctor",
-])->name("register.deleteDoctor");
-
-Route::put("appointment/confirm", [
-    AppointmentController::class,
-    "confirmAppointment",
-])->name("appointment.confirm");
-
-Route::put("appointment/declined", [
-    AppointmentController::class,
-    "declineAppointment",
-])->name("appointment.declined");
+    Route::get("doctors", [
+        DoctorController::class,
+        "index",
+    ])->name("doctor.index")->middleware(['auth', 'verified']);
+});
 
 
+//Patient Middleware
+Route::group(['middleware' => 'App\Http\Middleware\PatientMiddleware'], function () {
+    Route::get("dashboard", [
+        DashboardController::class,
+        "index",
+    ])->name("dashboard.index")->middleware(['auth', 'verified']);
+
+    Route::post("patient/create", [
+        PatientController::class,
+        "create",
+    ])->name("patient.create")->middleware(['auth', 'verified']);
+
+    Route::post("patient/store", [
+        PatientController::class,
+        "store",
+    ])->name("patient.store")->middleware(['auth', 'verified']);
+
+    Route::put("patient/{patient}", [
+        PatientController::class,
+        "update",
+    ])->name("patient.update")->middleware(['auth', 'verified']);
+
+    Route::get("patient/{patient}/edit", [
+        PatientController::class,
+        "edit",
+    ])->name("patient.edit")->middleware(['auth', 'verified']);
+
+    Route::delete("patient/{patient}", [
+        PatientController::class,
+        "destroy",
+    ])->name("patient.destroy")->middleware(['auth', 'verified']);
+   
+    Route::get("settings", [
+        DashboardController::class,
+        "index",
+    ])->name("settings.index")->middleware(['auth', 'verified']);
+
+    Route::get("register/deleteUser", [
+        RegisteredUserController::class,
+        "deleteUser",
+    ])->name("register.deleteUser")->middleware(['auth', 'verified']);
+
+    Route::get("patient/information", [
+        PatientController::class,
+        "patientInformation",
+    ])->name("patient.patientInformation")->middleware(['auth', 'verified']);
+
+    Route::get("appointments/show", [
+        AppointmentController::class,
+        "show",
+    ])->name("appointments.show")->middleware(['auth', 'verified']);
+
+    Route::post("appointments/store", [
+        AppointmentController::class,
+        "store",
+    ])->name("appointments.store")->middleware(['auth', 'verified']);
+
+    Route::delete("appointments/{appointment}", [
+        AppointmentController::class,
+        "destroy",
+    ])->name("appointments.destroy")->middleware(['auth', 'verified']);
+});
 
 
-require __DIR__.'/auth.php';
+//Doctor Middleware
+Route::group(['middleware' => 'App\Http\Middleware\DoctorMiddleware'], function () {
+
+    Route::get("patient", [
+        PatientController::class,
+        "index",
+    ])->name("patient.index")->middleware(['auth', 'verified']);
+
+    Route::put("appointment/confirm", [
+        AppointmentController::class,
+        "confirmAppointment",
+    ])->name("appointment.confirm")->middleware(['auth', 'verified']);
+
+    Route::put("appointment/declined", [
+        AppointmentController::class,
+        "declineAppointment",
+    ])->name("appointment.declined")->middleware(['auth', 'verified']);
+
+    Route::get("appointments/index", [
+        AppointmentController::class,
+        "index",
+    ])->name("appointments.index")->middleware(['auth', 'verified']);
+
+    Route::delete("appointments/{appointment}", [
+        AppointmentController::class,
+        "destroy",
+    ])->name("appointments.destroy")->middleware(['auth', 'verified']);
+});
+
+// Route::resource("appointments", AppointmentController::class)->except([
+//     "edit",
+//     "create",
+// ])->middleware(['auth', 'verified']);
+
+// Route::resource("dashboard", DashboardController::class)->except([
+//     "edit",
+//     "create",
+// ])->middleware(['auth', 'verified']);
+
+// Route::resource("settings", SettingController::class)->except([
+//     "edit",
+//     "create",
+// ])->middleware(['auth', 'verified']);
+
+// Route::resource("patient", PatientController::class)->except(["show"])->middleware(['auth', 'verified']);
+// Route::resource("doctors", DoctorController::class)->middleware(['auth', 'verified']);
+// Route::get("patient/information", [
+//     PatientController::class,
+//     "patientInformation",
+// ])->name("patient.patientInformation");
+
+// Route::post("register/storeDoctor", [
+//     RegisteredUserController::class,
+//     "storeDoctor",
+// ])->name("register.storeDoctor");
+
+// Route::get("register/deleteUser", [
+//     RegisteredUserController::class,
+//     "deleteUser",
+// ])->name("register.deleteUser");
+
+// Route::delete("register/deleteDoctor", [
+//     RegisteredUserController::class,
+//     "deleteDoctor",
+// ])->name("register.deleteDoctor");
+
+// Route::put("appointment/confirm", [
+//     AppointmentController::class,
+//     "confirmAppointment",
+// ])->name("appointment.confirm");
+
+// Route::put("appointment/declined", [
+//     AppointmentController::class,
+//     "declineAppointment",
+// ])->name("appointment.declined");
+
+
+
+
+require __DIR__ . '/auth.php';
