@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Appointment;
 use App\Models\Patient;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -14,11 +14,14 @@ class PatientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
        
             
-        return Inertia::render("Doctor/Patients", ["patients" => Patient::where('id','!=','')->paginate(10)]);
+        return Inertia::render("Doctor/Patients", ["appointments"=>Appointment::all(),"patients" => Patient::where('id','!=','')->when($request->term, function($query,$term){
+            $query->where('last_name','LIKE','%'.$term.'%');
+        })->paginate(10)]);
+
     }
 
     /**

@@ -4,7 +4,8 @@
             <div class="max-w-xs">
                 <input
                     type="search"
-                    v-model="params.search"
+                    v-model="term"
+                    @keyup="search"
                     aria-label="Search"
                     placeholder="Search..."
                     class="block w-full rounded-md border-gray-700 shadow-sm focus:ring-blue-700 focus:border-blue-700 sm:text-sm"
@@ -137,6 +138,7 @@ import useFormatter from "@/Components/composables/useFormatter";
 import BaseButton from "@/Components/Common/BaseButton";
 import SmallButton from "@/Components/Common/SmallButton";
 import StatusTag from "@/Components/Common/StatusTag";
+import { Inertia } from "@inertiajs/inertia";
 import { provide, toRefs } from "vue";
 
 export default {
@@ -149,9 +151,10 @@ export default {
         SmallButton,
     },
     props: {
+        appointments: Array,
         patients: Array,
     },
-    setup(props) {
+    data(props) {
         const { formatDate } = useFormatter();
         const { showModal, toggleModal } = useModal();
 
@@ -162,6 +165,7 @@ export default {
         } = useModal();
         provide("toggleInformationModal", toggleInformationModal);
         provide("patient", patient);
+        provide("appointments", props.appointments);
 
         return {
             formatDate,
@@ -170,19 +174,13 @@ export default {
             showInformationModal,
             toggleInformationModal,
 
-            params: { search: null },
+            term: "",
         };
     },
 
-    watch: {
-        params: {
-            handler() {
-                this.inertia.get(this.route("patients"), this.params, {
-                    replace: true,
-                    preserveState: true,
-                });
-            },
-            deep: true,
+    methods: {
+        search() {
+            Inertia.replace(route("patient.index", { term: this.term }));
         },
     },
 };

@@ -56,26 +56,105 @@
                     title="Emergency Contact Number (Cell)"
                     :data="patient.emergency_cell_phone"
                 />
-            </div></div
-    ></base-modalex>
+            </div>
+        </div>
+
+        <div class="text-gray-500 text-3xl font-medium mb-4 mt-5">
+            Appointments
+        </div>
+
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table
+                class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+            >
+                <thead class="text-xs text-white uppercase bg-blue-700">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">Reason</th>
+                        <th scope="col" class="px-6 py-3">Date</th>
+                        <th scope="col" class="px-6 py-3">Time</th>
+                        <th scope="col" class="px-6 py-3">Status</th>
+
+                        <!-- <th scope="col" class="px-6 py-3">
+                            <span class="sr-only"></span>
+                        </th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr
+                        v-for="appointment in appointments"
+                        :key="appointment.id"
+                        class="bg-white border-b"
+                    >
+                        <th
+                            scope="row"
+                            class="px-6 py-4 font-medium text-gray-700 whitespace-nowrap"
+                            v-if="appointment.patient_id == patient.id"
+                            v-text="appointment.reason"
+                        />
+                        <td
+                            v-if="appointment.patient_id == patient.id"
+                            class="px-6 py-4"
+                            v-text="formatDate(appointment.appointment_date)"
+                        />
+                        <td
+                            v-if="appointment.patient_id == patient.id"
+                            class="px-6 py-4"
+                            v-text="tConvert(appointment.appointment_time)"
+                        />
+                        <td
+                            v-if="appointment.patient_id == patient.id"
+                            class="px-6 py-4"
+                            v-text="appointment.status"
+                        />
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </base-modalex>
 </template>
 
 <script>
 import BaseModalex from "@/Components/Common/BaseModalex";
 import DataLabel from "@/Components/Common/DataLabel";
+import useFormatter from "@/Components/composables/useFormatter";
+
+import BaseButton from "@/Components/Common/BaseButton";
 import { inject, onMounted, ref } from "vue";
+import { Inertia } from "@inertiajs/inertia";
 export default {
     components: {
         DataLabel,
         BaseModalex,
     },
-    setup() {
+    data() {
         const show = ref(false);
         const toggleModal = inject("togglePatientModal");
         const patient = inject("patient");
+        const appointments = inject("appointments");
+
         const user = inject("user");
 
+        const { formatDate } = useFormatter();
+
+        function tConvert(time) {
+            // Check correct time format and split into components
+            time = time
+                .toString()
+                .match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+            if (time.length > 1) {
+                // If time format correct
+                time = time.slice(1); // Remove full string match value
+                time[5] = +time[0] < 12 ? "AM" : "PM"; // Set AM/PM
+                time[0] = +time[0] % 12 || 12; // Adjust hours
+            }
+            return time.join(""); // return adjusted time or original string
+        }
+
         return {
+            formatDate,
+            tConvert,
+            appointments,
             patient,
             toggleModal,
             user,
