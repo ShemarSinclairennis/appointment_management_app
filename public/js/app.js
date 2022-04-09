@@ -24429,8 +24429,37 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "Pagination",
   props: {
-    links: Array
+    pagination: Object,
+    item_name: String
+  },
+  data: function data() {
+    return {
+      page: this.pagination.current_page
+    };
+  },
+  watch: {
+    "pagination.current_page": function paginationCurrent_page(page) {
+      this.page = page;
+    }
+  },
+  methods: {
+    loadPage: function loadPage(page) {
+      this.$inertia.get(this.$page.url, {
+        page: page
+      }, {
+        preserveState: true
+      });
+    }
+  },
+  computed: {
+    noPreviousPage: function noPreviousPage() {
+      return this.pagination.current_page - 1 <= 0;
+    },
+    noNextPage: function noNextPage() {
+      return this.pagination.current_page + 1 > this.pagination.last_page;
+    }
   }
 });
 
@@ -25121,7 +25150,14 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     doctors: Array
   },
-  setup: function setup(props) {
+  methods: {
+    search: function search() {
+      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_8__.Inertia.replace(route("doctors.index", {
+        term: this.term
+      }));
+    }
+  },
+  data: function data() {
     var _useModal = (0,_composables_useModal__WEBPACK_IMPORTED_MODULE_6__["default"])(),
         showModal = _useModal.showModal,
         toggleModal = _useModal.toggleModal;
@@ -25150,21 +25186,8 @@ __webpack_require__.r(__webpack_exports__);
       toggleModal: toggleModal,
       showDoctorModal: showDoctorModal,
       toggleDoctorModal: toggleDoctorModal,
-      params: {
-        search: null
-      }
+      term: ""
     };
-  },
-  watch: {
-    params: {
-      handler: function handler() {
-        this.inertia.get(this.route("doctors"), this.params, {
-          replace: true,
-          preserveState: true
-        });
-      },
-      deep: true
-    }
   }
 });
 
@@ -25636,20 +25659,14 @@ __webpack_require__.r(__webpack_exports__);
       confirmAppointment: confirmAppointment,
       formatDate: formatDate,
       tConvert: tConvert,
-      params: {
-        search: null
-      }
+      term: ""
     };
   },
-  watch: {
-    params: {
-      handler: function handler() {
-        this.inertia.get(this.route("appointments"), this.params, {
-          replace: true,
-          preserveState: true
-        });
-      },
-      deep: true
+  methods: {
+    search: function search() {
+      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_7__.Inertia.replace(route("appointments.index", {
+        term: this.term
+      }));
     }
   }
 });
@@ -25835,7 +25852,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Components_Common_StatusTag__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/Components/Common/StatusTag */ "./resources/js/Components/Common/StatusTag.vue");
 /* harmony import */ var _Components_AppointmentModal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/Components/AppointmentModal */ "./resources/js/Components/AppointmentModal.vue");
 /* harmony import */ var _composables_useModal__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/composables/useModal */ "./resources/js/composables/useModal.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
 
 
 
@@ -25855,9 +25874,7 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     appointments: Object
   },
-  setup: function setup(props) {
-    console.log(props.appointments);
-
+  data: function data() {
     var _useModal = (0,_composables_useModal__WEBPACK_IMPORTED_MODULE_6__["default"])(),
         showModal = _useModal.showModal,
         toggleModal = _useModal.toggleModal;
@@ -25887,9 +25904,9 @@ __webpack_require__.r(__webpack_exports__);
       return time.join(""); // return adjusted time or original string
     }
 
-    (0,vue__WEBPACK_IMPORTED_MODULE_7__.provide)("toggleAppointmentModal", toggleAppointmentModal);
-    (0,vue__WEBPACK_IMPORTED_MODULE_7__.provide)("appointment", appointment);
-    (0,vue__WEBPACK_IMPORTED_MODULE_7__.provide)("mode", mode);
+    (0,vue__WEBPACK_IMPORTED_MODULE_8__.provide)("toggleAppointmentModal", toggleAppointmentModal);
+    (0,vue__WEBPACK_IMPORTED_MODULE_8__.provide)("appointment", appointment);
+    (0,vue__WEBPACK_IMPORTED_MODULE_8__.provide)("mode", mode);
     return {
       formatDate: formatDate,
       showModal: showModal,
@@ -25897,20 +25914,14 @@ __webpack_require__.r(__webpack_exports__);
       showAppointmentModal: showAppointmentModal,
       toggleAppointmentModal: toggleAppointmentModal,
       tConvert: tConvert,
-      params: {
-        search: null
-      }
+      term: ""
     };
   },
-  watch: {
-    params: {
-      handler: function handler() {
-        this.inertia.get(this.route("appointments"), this.params, {
-          replace: true,
-          preserveState: true
-        });
-      },
-      deep: true
+  methods: {
+    search: function search() {
+      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_7__.Inertia.replace(route("appointments.show", {
+        term: this.term
+      }));
     }
   }
 });
@@ -26987,49 +26998,144 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "flex flex-wrap -mb-1"
+  "class": "inline-flex justify-center items-center"
 };
-var _hoisted_2 = ["innerHTML"];
-var _hoisted_3 = ["innerHTML"];
+var _hoisted_2 = {
+  "class": "hidden mr-2 text-sm text-gray-600 lg:block"
+};
+var _hoisted_3 = {
+  key: 0,
+  "class": "flex space-x-1 items-top"
+};
+var _hoisted_4 = ["disabled"];
+
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
+  xmlns: "http://www.w3.org/2000/svg",
+  "class": "w-4 h-4 lg:h-3 lg:w-3",
+  fill: "none",
+  viewBox: "0 0 24 24",
+  stroke: "currentColor"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
+  "stroke-linecap": "round",
+  "stroke-linejoin": "round",
+  "stroke-width": "2",
+  d: "M11 19l-7-7 7-7m8 14l-7-7 7-7"
+})], -1
+/* HOISTED */
+);
+
+var _hoisted_6 = [_hoisted_5];
+var _hoisted_7 = ["disabled"];
+
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
+  xmlns: "http://www.w3.org/2000/svg",
+  "class": "w-4 h-4 lg:h-3 lg:w-3",
+  fill: "none",
+  viewBox: "0 0 24 24",
+  stroke: "currentColor"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
+  "stroke-linecap": "round",
+  "stroke-linejoin": "round",
+  "stroke-width": "2",
+  d: "M15 19l-7-7 7-7"
+})], -1
+/* HOISTED */
+);
+
+var _hoisted_9 = [_hoisted_8];
+var _hoisted_10 = {
+  "class": "flex flex-col space-y-2 md:flex-row md:space-y-0 md:items-center md:space-x-1"
+};
+var _hoisted_11 = {
+  "class": "text-gray-600 lg:text-sm"
+};
+var _hoisted_12 = {
+  "class": "px-2 text-gray-600 lg:text-sm"
+};
+var _hoisted_13 = ["disabled"];
+
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
+  xmlns: "http://www.w3.org/2000/svg",
+  "class": "w-4 h-4 lg:h-3 lg:w-3",
+  fill: "none",
+  viewBox: "0 0 24 24",
+  stroke: "currentColor"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
+  "stroke-linecap": "round",
+  "stroke-linejoin": "round",
+  "stroke-width": "2",
+  d: "M9 5l7 7-7 7"
+})], -1
+/* HOISTED */
+);
+
+var _hoisted_15 = [_hoisted_14];
+var _hoisted_16 = ["disabled"];
+
+var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
+  xmlns: "http://www.w3.org/2000/svg",
+  "class": "w-4 h-4 lg:h-3 lg:w-3",
+  fill: "none",
+  viewBox: "0 0 24 24",
+  stroke: "currentColor"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
+  "stroke-linecap": "round",
+  "stroke-linejoin": "round",
+  "stroke-width": "2",
+  d: "M13 5l7 7-7 7M5 5l7 7-7 7"
+})], -1
+/* HOISTED */
+);
+
+var _hoisted_18 = [_hoisted_17];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  var _component_inertia_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("inertia-link");
-
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.links, function (link, key) {
-    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
-      key: key
-    }, [link.url === null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
-      key: "".concat(key, "-disabled"),
-      "class": "mr-1 mb-1 px-4 py-3 text-sm leading-4 text-gray-700 border rounded",
-      innerHTML: link.label
-    }, null, 8
-    /* PROPS */
-    , _hoisted_2)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_inertia_link, {
-      key: key,
-      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["mr-1 mb-1 px-4 py-3 text-sm leading-4 border rounded hover:bg-white focus:border-blue-700 focus:text-blue-700", {
-        'bg-white': link.active
-      }]),
-      href: link.url
-    }, {
-      "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-        return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-          innerHTML: link.label
-        }, null, 8
-        /* PROPS */
-        , _hoisted_3)];
-      }),
-      _: 2
-      /* DYNAMIC */
-
-    }, 1032
-    /* PROPS, DYNAMIC_SLOTS */
-    , ["class", "href"]))], 64
-    /* STABLE_FRAGMENT */
-    );
-  }), 128
-  /* KEYED_FRAGMENT */
-  ))])], 512
-  /* NEED_PATCH */
-  )), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $props.links.length > 3]]);
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.pagination.total) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.item_name), 1
+  /* TEXT */
+  ), $props.pagination.last_page > 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    disabled: $options.noPreviousPage,
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([{
+      'opacity-50': $options.noPreviousPage
+    }, "inline-flex justify-center items-center w-11 h-11 text-gray-700 bg-white rounded border border-gray-200 shadow-sm outline-none hover:bg-gray-50 lg:h-9 lg:w-9 lg:text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"]),
+    onClick: _cache[0] || (_cache[0] = function ($event) {
+      return $options.loadPage(1);
+    })
+  }, _hoisted_6, 10
+  /* CLASS, PROPS */
+  , _hoisted_4), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    disabled: $options.noPreviousPage,
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([{
+      'opacity-50': $options.noPreviousPage
+    }, "inline-flex justify-center items-center w-11 h-11 text-gray-700 bg-white rounded border border-gray-200 shadow-sm outline-none hover:bg-gray-50 lg:h-9 lg:w-9 focus:ring-1 focus:ring-blue-500 focus:border-blue-500"]),
+    onClick: _cache[1] || (_cache[1] = function ($event) {
+      return $options.loadPage($props.pagination.current_page - 1);
+    })
+  }, _hoisted_9, 10
+  /* CLASS, PROPS */
+  , _hoisted_7), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <input\r\n                   \r\n                    type=\"number\"\r\n                    @keydown.enter=\"loadPage(page)\"\r\n                    v-model=\"page\"\r\n                    class=\"px-6 w-11 h-11 text-center rounded border border-gray-400 shadow-sm lg:h-9 lg:w-9 lg:text-sm focus:ring-blue-500 focus:border-blue-500\"\r\n                /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.pagination.current_page), 1
+  /* TEXT */
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, " of " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.pagination.last_page), 1
+  /* TEXT */
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    disabled: $options.noNextPage,
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([{
+      'opacity-50': $options.noNextPage
+    }, "inline-flex justify-center items-center w-11 h-11 text-gray-700 bg-white rounded border border-gray-300 shadow-sm outline-none hover:bg-gray-50 lg:h-9 lg:w-9 focus:ring-1 focus:ring-blue-500 focus:border-blue-500"]),
+    onClick: _cache[2] || (_cache[2] = function ($event) {
+      return $options.loadPage($props.pagination.current_page + 1);
+    })
+  }, _hoisted_15, 10
+  /* CLASS, PROPS */
+  , _hoisted_13), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    disabled: $options.noNextPage,
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([{
+      'opacity-50': $options.noNextPage
+    }, "inline-flex justify-center items-center w-11 h-11 text-gray-700 bg-white rounded border border-gray-300 shadow-sm outline-none hover:bg-gray-50 lg:h-9 lg:w-9 focus:ring-1 focus:ring-blue-500 focus:border-blue-500"]),
+    onClick: _cache[3] || (_cache[3] = function ($event) {
+      return $options.loadPage($props.pagination.last_page);
+    })
+  }, _hoisted_18, 10
+  /* CLASS, PROPS */
+  , _hoisted_16)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
 }
 
 /***/ }),
@@ -27708,7 +27814,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }, 8
   /* PROPS */
-  , ["active", "href"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.isAdminUser ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_sidebar_link, {
+  , ["active", "href"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.isDoctorUser ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_sidebar_link, {
     key: 2,
     active: _ctx.route().current('patient.index'),
     href: _ctx.route('patient.index'),
@@ -28045,20 +28151,23 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "search",
         "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
-          return $setup.params.search = $event;
+          return $data.term = $event;
+        }),
+        onKeyup: _cache[1] || (_cache[1] = function () {
+          return $options.search && $options.search.apply($options, arguments);
         }),
         "aria-label": "Search",
         placeholder: "Search...",
         "class": "block w-full rounded-md border-gray-700 shadow-sm focus:ring-blue-700 focus:border-blue-700 sm:text-sm"
-      }, null, 512
-      /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.params.search]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_base_button, {
+      }, null, 544
+      /* HYDRATE_EVENTS, NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.term]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_base_button, {
         "class": "mb-4 mr-4",
         color: "blue",
         icon: "fas fa-plus",
         label: "Add Doctor",
-        onClick: _cache[1] || (_cache[1] = function ($event) {
-          return $setup.toggleDoctorModal();
+        onClick: _cache[2] || (_cache[2] = function ($event) {
+          return $data.toggleDoctorModal();
         })
       })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", _hoisted_10, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.doctors.data, function (doctor) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
@@ -28087,7 +28196,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           label: "Remove",
           type: "button",
           onClick: function onClick($event) {
-            return $setup.deleteDoctor({
+            return $data.deleteDoctor({
               doctor: doctor
             });
           }
@@ -28097,13 +28206,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }), 128
       /* KEYED_FRAGMENT */
       ))])])])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_pagination, {
-        "class": "mt-10",
-        links: $props.doctors.links
+        "class": "mt-6",
+        pagination: $props.doctors,
+        item_name: "Doctors"
       }, null, 8
       /* PROPS */
-      , ["links"]), $setup.showDoctorModal ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_doctor_modal, {
+      , ["pagination"]), $data.showDoctorModal ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_doctor_modal, {
         key: 0,
-        onToggle: $setup.toggleDoctorModal
+        onToggle: $data.toggleDoctorModal
       }, null, 8
       /* PROPS */
       , ["onToggle"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
@@ -28857,16 +28967,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-        type: "search",
+        id: "search",
+        type: "date",
         "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
-          return $data.params.search = $event;
+          return $data.term = $event;
         }),
-        "aria-label": "Search",
-        placeholder: "Search...",
+        onKeyup: _cache[1] || (_cache[1] = function () {
+          return $options.search && $options.search.apply($options, arguments);
+        }),
         "class": "block w-full rounded-md border-gray-700 shadow-sm focus:ring-blue-700 focus:border-blue-700 sm:text-sm"
-      }, null, 512
-      /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.params.search]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", _hoisted_10, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.appointments.data, function (appointment) {
+      }, null, 544
+      /* HYDRATE_EVENTS, NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.term]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", _hoisted_10, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.appointments.data, function (appointment) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
           key: appointment.id
         }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
@@ -28957,11 +29069,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }), 128
       /* KEYED_FRAGMENT */
       ))])])])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_pagination, {
-        "class": "mt-10",
-        links: $props.appointments.links
+        "class": "mt-6",
+        pagination: $props.appointments,
+        item_name: "Appointments"
       }, null, 8
       /* PROPS */
-      , ["links"]), _ctx.showAppointmentModal ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_appointment_modal, {
+      , ["pagination"]), _ctx.showAppointmentModal ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_appointment_modal, {
         key: 0,
         onToggle: _ctx.toggleAppointmentModal
       }, null, 8
@@ -29113,11 +29226,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }), 128
       /* KEYED_FRAGMENT */
       ))])])])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_pagination, {
-        "class": "mt-10",
-        links: $props.patients.links
+        "class": "mt-6",
+        pagination: $props.patients,
+        item_name: "Patients"
       }, null, 8
       /* PROPS */
-      , ["links"]), $setup.showInformationModal ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_information_modal, {
+      , ["pagination"]), $setup.showInformationModal ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_information_modal, {
         key: 0,
         onToggle: $setup.toggleInformationModal
       }, null, 8
@@ -29548,22 +29662,25 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-        type: "search",
+        id: "search",
+        type: "date",
         "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
-          return $setup.params.search = $event;
+          return $data.term = $event;
         }),
-        "aria-label": "Search",
+        onKeyup: _cache[1] || (_cache[1] = function () {
+          return $options.search && $options.search.apply($options, arguments);
+        }),
         placeholder: "Search...",
         "class": "block w-full rounded-md border-gray-700 shadow-sm focus:ring-blue-700 focus:border-blue-700 sm:text-sm"
-      }, null, 512
-      /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.params.search]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_base_button, {
+      }, null, 544
+      /* HYDRATE_EVENTS, NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.term]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_base_button, {
         "class": "mb-4 mr-4",
         color: "blue",
         icon: "fas fa-plus",
         label: "Make Appointment",
-        onClick: _cache[1] || (_cache[1] = function ($event) {
-          return $setup.toggleAppointmentModal();
+        onClick: _cache[2] || (_cache[2] = function ($event) {
+          return $data.toggleAppointmentModal();
         })
       })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", _hoisted_10, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.appointments.data, function (appointment) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
@@ -29575,12 +29692,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         /* PROPS */
         , _hoisted_11), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
           "class": "py-4 px-6 text-sm text-gray-800 whitespace-nowrap",
-          textContent: (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.formatDate(appointment.appointment_date))
+          textContent: (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.formatDate(appointment.appointment_date))
         }, null, 8
         /* PROPS */
         , _hoisted_12), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
           "class": "py-4 px-6 text-sm text-gray-800 whitespace-nowrap",
-          textContent: (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.tConvert(appointment.appointment_time))
+          textContent: (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.tConvert(appointment.appointment_time))
         }, null, 8
         /* PROPS */
         , _hoisted_13), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_status_tag, {
@@ -29591,13 +29708,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }), 128
       /* KEYED_FRAGMENT */
       ))])])])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_pagination, {
-        "class": "mt-10",
-        links: $props.appointments.links
+        "class": "mt-6",
+        pagination: $props.appointments,
+        item_name: "Appointments"
       }, null, 8
       /* PROPS */
-      , ["links"]), $setup.showAppointmentModal ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_appointment_modal, {
+      , ["pagination"]), $data.showAppointmentModal ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_appointment_modal, {
         key: 0,
-        onToggle: $setup.toggleAppointmentModal
+        onToggle: $data.toggleAppointmentModal
       }, null, 8
       /* PROPS */
       , ["onToggle"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
@@ -30218,24 +30336,15 @@ function useFormatter() {
   function formatDate(dateString) {
     var date = new Date(dateString);
     var options = {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
+      year: "numeric",
+      month: "short",
+      day: "numeric"
     };
-    return date.toLocaleDateString('en-US', options);
-  }
-
-  function formatCurrency(value) {
-    var formatter = new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD'
-    });
-    return formatter.format(value);
+    return date.toLocaleDateString("en-US", options);
   }
 
   return {
-    formatDate: formatDate,
-    formatCurrency: formatCurrency
+    formatDate: formatDate
   };
 }
 
@@ -51587,10 +51696,10 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 /***/ }),
 
-/***/ "./resources/css/app.css":
-/*!*******************************!*\
-  !*** ./resources/css/app.css ***!
-  \*******************************/
+/***/ "./resources/sass/app.scss":
+/*!*********************************!*\
+  !*** ./resources/sass/app.scss ***!
+  \*********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -57788,7 +57897,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
 /******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/js/app.js")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/css/app.css")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/sass/app.scss")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

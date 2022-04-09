@@ -18,10 +18,12 @@ class AppointmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         return Inertia::render("Doctor/Appointments", [
-            'appointments' => Appointment::where('status','!=','')->paginate(10)
+            'appointments' => Appointment::where('status','!=','')->when($request->term, function($query,$term){
+                $query->where('appointment_date','LIKE','%'.$term.'%');
+            })->paginate(10)
         ]);
     }
 
@@ -65,11 +67,13 @@ class AppointmentController extends Controller
      * @param  \App\Models\Appointment  $appointment
      * @return \Illuminate\Http\Response
      */
-    public function show(Patient $patient)
+    public function show(Request $request,Patient $patient)
     {
         $id = Auth::id();
         return Inertia::render("Patient/Appointments", [
-            'appointments' => Appointment::where('patient_id',$id)->orderBy('created_at', 'desc')->paginate(10)
+            'appointments' => Appointment::where('patient_id',$id)->orderBy('created_at', 'desc')->when($request->term, function($query,$term){
+                $query->where('appointment_date','LIKE','%'.$term.'%');
+            })->paginate(10)
         ]);
     }
 

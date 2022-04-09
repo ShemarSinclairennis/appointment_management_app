@@ -4,7 +4,8 @@
             <div class="max-w-xs">
                 <input
                     type="search"
-                    v-model="params.search"
+                    v-model="term"
+                    @keyup="search"
                     aria-label="Search"
                     placeholder="Search..."
                     class="block w-full rounded-md border-gray-700 shadow-sm focus:ring-blue-700 focus:border-blue-700 sm:text-sm"
@@ -121,7 +122,11 @@
                 </div>
             </div>
         </div>
-        <pagination class="mt-10" :links="doctors.links" />
+        <pagination
+            class="mt-6"
+            :pagination="doctors"
+            item_name="Doctors"
+        ></pagination>
 
         <doctor-modal v-if="showDoctorModal" @toggle="toggleDoctorModal" />
     </dashboard-layout>
@@ -152,7 +157,13 @@ export default {
     props: {
         doctors: Array,
     },
-    setup(props) {
+    methods: {
+        search() {
+            Inertia.replace(route("doctors.index", { term: this.term }));
+        },
+    },
+
+    data() {
         const { showModal, toggleModal } = useModal();
 
         const {
@@ -179,20 +190,8 @@ export default {
             toggleModal,
             showDoctorModal,
             toggleDoctorModal,
-            params: { search: null },
+            term: "",
         };
-    },
-
-    watch: {
-        params: {
-            handler() {
-                this.inertia.get(this.route("doctors"), this.params, {
-                    replace: true,
-                    preserveState: true,
-                });
-            },
-            deep: true,
-        },
     },
 };
 </script>

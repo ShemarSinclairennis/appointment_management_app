@@ -50,7 +50,7 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function (
     Route::get("doctors", [
         DoctorController::class,
         "index",
-    ])->name("doctor.index")->middleware(['auth', 'verified']);
+    ])->name("doctors.index")->middleware(['auth', 'verified']);
 });
 
 
@@ -87,7 +87,7 @@ Route::group(['middleware' => 'App\Http\Middleware\PatientMiddleware'], function
     ])->name("patient.destroy")->middleware(['auth', 'verified']);
    
     Route::get("settings", [
-        DashboardController::class,
+        SettingController::class,
         "index",
     ])->name("settings.index")->middleware(['auth', 'verified']);
 

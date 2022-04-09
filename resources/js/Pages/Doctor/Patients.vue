@@ -114,7 +114,12 @@
                 </div>
             </div>
         </div>
-        <pagination class="mt-10" :links="patients.links" />
+
+        <pagination
+            class="mt-6"
+            :pagination="patients"
+            item_name="Patients"
+        ></pagination>
 
         <information-modal
             v-if="showInformationModal"

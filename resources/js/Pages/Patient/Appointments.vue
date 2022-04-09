@@ -3,9 +3,10 @@
         <div class="flex justify-between mb-6">
             <div class="max-w-xs">
                 <input
-                    type="search"
-                    v-model="params.search"
-                    aria-label="Search"
+                    id="search"
+                    type="date"
+                    v-model="term"
+                    @keyup="search"
                     placeholder="Search..."
                     class="block w-full rounded-md border-gray-700 shadow-sm focus:ring-blue-700 focus:border-blue-700 sm:text-sm"
                 />
@@ -112,7 +113,11 @@
                 </div>
             </div>
         </div>
-        <pagination class="mt-10" :links="appointments.links" />
+        <pagination
+            class="mt-6"
+            :pagination="appointments"
+            item_name="Appointments"
+        ></pagination>
         <appointment-modal
             v-if="showAppointmentModal"
             @toggle="toggleAppointmentModal"
@@ -128,6 +133,7 @@ import BaseButton from "@/Components/Common/BaseButton";
 import StatusTag from "@/Components/Common/StatusTag";
 import AppointmentModal from "@/Components/AppointmentModal";
 import useModal from "@/composables/useModal";
+import { Inertia } from "@inertiajs/inertia";
 import { provide, toRefs } from "vue";
 
 export default {
@@ -141,8 +147,7 @@ export default {
     props: {
         appointments: Object,
     },
-    setup(props) {
-        console.log(props.appointments);
+    data() {
         const { showModal, toggleModal } = useModal();
         const { formatDate } = useFormatter();
         const {
@@ -179,19 +184,13 @@ export default {
             showAppointmentModal,
             toggleAppointmentModal,
             tConvert,
-            params: { search: null },
+            term: "",
         };
     },
 
-    watch: {
-        params: {
-            handler() {
-                this.inertia.get(this.route("appointments"), this.params, {
-                    replace: true,
-                    preserveState: true,
-                });
-            },
-            deep: true,
+    methods: {
+        search() {
+            Inertia.replace(route("appointments.show", { term: this.term }));
         },
     },
 };

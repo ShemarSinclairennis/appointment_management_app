@@ -18,9 +18,11 @@ class DoctorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     { 
-        return Inertia::render("Admin/Doctors",["doctors" => Doctor::where('id','!=','')->paginate(10)]);
+        return Inertia::render("Admin/Doctors",["doctors" => Doctor::where('id','!=','')->when($request->term, function($query,$term){
+            $query->where('last_name','LIKE','%'.$term.'%');
+        })->paginate(10)]);
     }
 
     /**

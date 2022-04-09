@@ -23,7 +23,7 @@
                     >Doctors</sidebar-link
                 >
                 <sidebar-link
-                    v-if="isAdminUser"
+                    v-if="isDoctorUser"
                     :active="route().current('patient.index')"
                     :href="route('patient.index')"
                     icon="fas fa-users"
