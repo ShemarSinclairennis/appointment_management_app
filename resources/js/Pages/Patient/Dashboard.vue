@@ -18,13 +18,13 @@
                     class="mb-4"
                     :day="
                         dateSplitter(
-                            'current',
+                            'not current',
                             upcoming_appointment.appointment_date
                         )[0]
                     "
                     :month="
                         dateSplitter(
-                            'current',
+                            'not Current',
                             upcoming_appointment.appointment_date
                         )[1]
                     "
@@ -163,7 +163,7 @@ export default {
             "November",
             "December",
         ];
-        function dateSplitter(action, appointment, time) {
+        function dateSplitter(action, appointment) {
             if (action == "current") {
                 const current = new Date();
                 const month = months[current.getMonth() + 1];
@@ -172,12 +172,19 @@ export default {
                 const date = [day, month];
                 return date;
             } else {
-                const current = new Date(appointment);
-                const month = months[current.getMonth() + 1];
-                const day =
-                    (current.getDate() < 10 ? "0" : "") + current.getDate();
-                const date = [day, month];
-                return date;
+                if (appointment == "0000-00-00") {
+                    const month = "-";
+                    const day = "-";
+                    const date = [day, month];
+                    return date;
+                } else {
+                    const current = new Date(appointment);
+                    const month = months[current.getMonth() + 1];
+                    const day =
+                        (current.getDate() < 10 ? "0" : "") + current.getDate();
+                    const date = [day, month];
+                    return date;
+                }
             }
         }
 

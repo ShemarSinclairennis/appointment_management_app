@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Inertia\Inertia;
 use Illuminate\Http\Request;
 
 class AdminMiddleware
@@ -18,7 +19,8 @@ class AdminMiddleware
     { 
         if ($request->user() && $request->user()->user_type != 'admin')
         {
-            return response(view('unauthorized')->with('role','ADMIN'));
+            return Inertia::render("Unauthorized/Unauthorized", []);
+            
     }
         return $next($request);
     }

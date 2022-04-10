@@ -69,8 +69,16 @@ class AppointmentController extends Controller
      */
     public function show(Request $request,Patient $patient)
     {
+        
         $id = Auth::id();
-        return Inertia::render("Patient/Appointments", [
+        $patient=  Patient::where('patient_id',$id)->count();
+
+        if($patient==0){
+            $patient=='incomplete';
+        }else{
+            $patient=='complete';
+        }
+        return Inertia::render("Patient/Appointments", [ 'patient_profile_status'=>$patient,
             'appointments' => Appointment::where('patient_id',$id)->orderBy('created_at', 'desc')->when($request->term, function($query,$term){
                 $query->where('appointment_date','LIKE','%'.$term.'%');
             })->paginate(10)

@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class PatientMiddleware
 {
@@ -18,7 +19,7 @@ class PatientMiddleware
     {
         if ($request->user() && $request->user()->user_type != 'patient')
         {
-            return response(view('unauthorized')->with('role','PATIENT'));
+            return Inertia::render("Unauthorized/Unauthorized", []);
     }
         return $next($request);
     }

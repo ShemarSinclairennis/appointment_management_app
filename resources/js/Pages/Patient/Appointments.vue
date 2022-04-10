@@ -1,8 +1,18 @@
 <template>
     <dashboard-layout :header-caption="Appointments" header="Appointments">
+        <div
+            v-if="patient_profile_status == 0"
+            class="text-center bg-red-400 text-white rounded-full py-4 w-full mb-3"
+        >
+            <i class="fas fa-exclamation-circle text-white ml-3"></i>
+            To make an appointment you must first complete your profile. Please
+            select the information tab to add your personal information
+        </div>
+
         <div class="flex justify-between mb-6">
             <div class="max-w-xs">
                 <input
+                    v-if="patient_profile_status != '0'"
                     id="search"
                     type="date"
                     v-model="term"
@@ -12,6 +22,7 @@
                 />
             </div>
             <base-button
+                v-if="patient_profile_status != '0'"
                 class="mb-4 mr-4"
                 color="blue"
                 icon="fas fa-plus"
@@ -169,6 +180,7 @@ export default {
     },
     props: {
         appointments: Object,
+        patient_profile_status: String,
     },
     data() {
         const { showModal, toggleModal } = useModal();
