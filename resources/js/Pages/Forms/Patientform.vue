@@ -9,7 +9,18 @@
             <!-- Name Fields-->
             <div class="grid grid-cols-3 gap-x-4 pb-8">
                 <!-- First Name Field-->
+                <div v-if="mode == 'Add'">
+                    <label class="input-label" v-text="'First Name'"></label>
+                    {{ $page.props.auth.user.first_name }}
+                    <!-- <base-input
+                        v-model="form.first_name"
+                        id="first_name"
+                        class="invisible"
+                    /> -->
+                </div>
+
                 <base-input
+                    v-if="mode != 'Add'"
                     v-model="form.first_name"
                     :error="form.errors.first_name"
                     label="First Name"
@@ -18,7 +29,17 @@
                 />
 
                 <!-- Last Name Field-->
+                <div v-if="mode == 'Add'">
+                    <label class="input-label" v-text="'Last Name'"></label>
+                    {{ $page.props.auth.user.last_name }}
+                    <!-- <base-input
+                        v-model="form.last_name"
+                        id="last_name"
+                        class="invisible"
+                    /> -->
+                </div>
                 <base-input
+                    v-if="mode != 'Add'"
                     v-model="form.last_name"
                     :error="form.errors.last_name"
                     label="Last Name"
@@ -35,14 +56,6 @@
                 />
             </div>
             <div class="grid grid-cols-3 gap-x-4 pb-8">
-                <!-- Maritial Status Field-->
-                <base-input
-                    v-model="form.marital_status"
-                    label="Marital Status"
-                    id="marital_status"
-                    class="w-full"
-                />
-
                 <!-- Gender Field-->
                 <base-input
                     v-model="form.gender"
@@ -124,7 +137,17 @@
                     class="w-full"
                 />
                 <!-- Email  Field-->
+                <div v-if="mode == 'Add'">
+                    <label class="input-label" v-text="'Email'"></label>
+                    {{ $page.props.auth.user.email }}
+                    <!-- <base-input
+                        v-model="form.email"
+                        id="email"
+                        class="invisible"
+                    /> -->
+                </div>
                 <base-input
+                    v-if="mode != 'Add'"
                     v-model="form.email"
                     :error="form.errors.email"
                     label="Email"
