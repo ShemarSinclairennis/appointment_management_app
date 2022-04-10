@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Appointment;
 use App\Models\Patient;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
@@ -44,9 +45,9 @@ class PatientController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
+
     { $request->validate([
-        'first_name' => 'required|string|max:255',
-        'last_name' => 'required|string|max:255',
+        
         'middle_initial'=>'required|string|max:1',
         'gender'=>'required',
         'dob'=>'required',
@@ -55,7 +56,7 @@ class PatientController extends Controller
         'parish'=>'required',
         'home_phone'=>'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
         'cell_phone'=>'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
-        'email' => 'required|string|email|max:255|unique:users',
+       
         'occupation' => 'required|string|max:50',
         'employer' => 'required|string|max:50',
         'employer_number'=>'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
@@ -65,11 +66,12 @@ class PatientController extends Controller
         'emergency_cell_phone'=>'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
         
     ]);
-        
+        $id = Auth::id();
+      
         $patient = new Patient;
-        $patient->patient_id = Auth::id();
-        $patient->first_name = $request->first_name;
-        $patient->last_name = $request->last_name;
+        $patient->patient_id = $id;
+        $patient->first_name = Auth::user()->first_name;
+        $patient->last_name =  Auth::user()->last_name;
         $patient->middle_initial = $request->middle_initial;
         $patient->gender = $request->gender;
         $patient->dob = $request->dob; 
@@ -78,7 +80,7 @@ class PatientController extends Controller
         $patient->parish = $request->parish;
         $patient->home_phone = $request->home_phone;
         $patient->cell_phone = $request->cell_phone;
-        $patient->email = $request->email;
+        $patient->email = Auth::user()->email;
         $patient->occupation = $request->occupation;
         $patient->employer = $request->employer;
         $patient->employer_number = $request->employer_number;
@@ -137,8 +139,12 @@ class PatientController extends Controller
      */
     public function update(Request $request, Patient $patient)
     {
-        
+        Auth::user()->first_name =$request->first_name;
+        $user= Auth::user();
         $patient->patient_id = Auth::id();
+        User::where('id',$user->id)->update(['first_name'=> $request->first_name]);
+        User::where('id',$user->id)->update(['last_name'=> $request->last_name]);
+        User::where('id',$user->id)->update(['email'=> $request->email]);
         $patient->first_name = $request->first_name;
         $patient->last_name = $request->last_name;
         $patient->middle_initial = $request->middle_initial;
@@ -157,6 +163,8 @@ class PatientController extends Controller
         $patient->emergency_home_phone = $request->emergency_home_phone;
         $patient->emergency_cell_phone = $request->emergency_cell_phone;
         $patient->save();
+       
+       
         return redirect()->route('patient.patientInformation')->withSuccess("Your information has been updated");
     }
 
