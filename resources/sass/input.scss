@@ -3,7 +3,7 @@ $namespace: "xmx"; // change the 'mx' to 'xmx'. then <date-picker prefix-class="
 $default-color: #191d23;
 $primary-color: #ec2a2f;
 
-@import "~vue-datepicker-next/scss/index.scss";
+@import "vue3-date-time-picker/dist/main.css";
 
 @layer components {
     input[type="checkbox"] {
