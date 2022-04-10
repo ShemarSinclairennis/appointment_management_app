@@ -75,6 +75,7 @@ class RegisteredUserController extends Controller
             'last_name' => $request->last_name,
             'email' => $request->email,
             'user_type' =>'doctor',
+            'ip_address' =>request()->ip(),
             'password' => Hash::make($request->password),
            
         ]);
@@ -93,7 +94,7 @@ class RegisteredUserController extends Controller
 
         
 
-        return back()->withSuccess("Doctor has added to the system");
+        return back()->withSuccess("Doctor has been added to the system");
     }
     
     public function deleteUser (){

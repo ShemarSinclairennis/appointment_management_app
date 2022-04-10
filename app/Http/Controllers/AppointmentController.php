@@ -123,10 +123,13 @@ class AppointmentController extends Controller
 
     public function confirmAppointment(Request $request){
                 $id=array_column($request->appointment,'id');
+            
                 $appointment=Appointment::where('id',$id)->first();
+                
+                $patient =Patient::where('patient_id', $appointment->patient_id)->first();
                 $appointment->status="Confirmed";
                 $appointment->save();
-                $email= Auth::user()->email;
+                $email= $patient->email;
                 $data =['id'=>$id];
                 Mail::to($email)->send(new AppointmentMail,$data);
                 return back()->withSuccess("Appointment has been confirmed");
@@ -136,9 +139,10 @@ class AppointmentController extends Controller
     public function declineAppointment(Request $request){
         $id=array_column($request->appointment,'id');
                 $appointment=Appointment::where('id',$id)->first();
+                $patient =Patient::where('patient_id', $appointment->patient_id)->first();
                 $appointment->status="Declined";
                 $appointment->save();
-                $email= Auth::user()->email;
+                $email= $patient->email;
                 $data =['id'=>$id];
                 Mail::to($email)->send(new DeclineMail,$data);
                 return back()->withSuccess("Appointment has been declined");

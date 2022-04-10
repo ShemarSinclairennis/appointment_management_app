@@ -180,8 +180,8 @@ export default {
                 } else {
                     const current = new Date(appointment);
                     const month = months[current.getMonth() + 1];
-                    const day =
-                        (current.getDate() < 10 ? "0" : "") + current.getDate();
+                    const calc = current.getDate() + 1;
+                    const day = (calc < 10 ? "0" : "") + calc;
                     const date = [day, month];
                     return date;
                 }

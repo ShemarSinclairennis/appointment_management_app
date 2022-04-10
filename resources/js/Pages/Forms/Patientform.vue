@@ -7,16 +7,16 @@
         <!-- Customer Information Form-->
         <form @submit.prevent="submit">
             <!-- Name Fields-->
+            <div class="mb-4">
+                <label class="text-2xl text-gray-700 font-medium"
+                    >General Information</label
+                >
+            </div>
             <div class="grid grid-cols-3 gap-x-4 pb-8">
                 <!-- First Name Field-->
                 <div v-if="mode == 'Add'">
                     <label class="input-label" v-text="'First Name'"></label>
                     {{ $page.props.auth.user.first_name }}
-                    <!-- <base-input
-                        v-model="form.first_name"
-                        id="first_name"
-                        class="invisible"
-                    /> -->
                 </div>
 
                 <base-input
@@ -55,6 +55,7 @@
                     class="w-full"
                 />
             </div>
+
             <div class="grid grid-cols-3 gap-x-4 pb-8">
                 <!-- Gender Field-->
                 <base-input
@@ -78,6 +79,12 @@
                     label="Date of Birth"
                     type="date"
                 />
+            </div>
+
+            <div class="mb-4">
+                <label class="text-2xl text-gray-700 font-medium"
+                    >Contact Information</label
+                >
             </div>
 
             <div class="grid grid-cols-3 gap-x-4 pb-8">
@@ -140,11 +147,6 @@
                 <div v-if="mode == 'Add'">
                     <label class="input-label" v-text="'Email'"></label>
                     {{ $page.props.auth.user.email }}
-                    <!-- <base-input
-                        v-model="form.email"
-                        id="email"
-                        class="invisible"
-                    /> -->
                 </div>
                 <base-input
                     v-if="mode != 'Add'"
@@ -154,6 +156,11 @@
                     id="email"
                     class="w-full"
                 />
+            </div>
+            <div class="mb-4">
+                <label class="text-2xl text-gray-700 font-medium"
+                    >Employer Information</label
+                >
             </div>
             <div class="grid grid-cols-3 gap-x-4 pb-8">
                 <!-- Occupation Field-->
@@ -181,6 +188,11 @@
                     id="employer_number"
                     class="w-full"
                 />
+            </div>
+            <div class="mb-4">
+                <label class="text-2xl text-gray-700 font-medium"
+                    >Emergency Contact Information</label
+                >
             </div>
             <div class="grid grid-cols-3 gap-x-4 pb-8">
                 <!-- Emergency Contact Name Field-->
