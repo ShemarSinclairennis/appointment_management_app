@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Dashboard;
 use App\Models\Appointment;
+use App\Models\Patient;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
@@ -28,10 +29,17 @@ class DashboardController extends Controller
         ];
 
         $id = Auth::id();
+        $patient=  Patient::where('patient_id',$id)->count();
         $appointments_count=  Appointment::where('patient_id',$id)->count();
         $appointments= Appointment::where('patient_id',$id)->orderBy('appointment_date','desc')->limit(5)->get();
         $upcoming_appointment = Appointment::where('patient_id',$id)->orderBy('appointment_date','desc')->first();
 
+        if($patient==0){
+            $patient=='incomplete';
+        }else{
+            $patient=='complete';
+        }
+      
         if(empty($upcoming_appointment)){
             $upcoming_appointment=$empty_array;
             
@@ -40,7 +48,8 @@ class DashboardController extends Controller
         return Inertia::render("Patient/Dashboard", [
             'appointments' => $appointments,
             'appointments_count'=>$appointments_count,
-            'upcoming_appointment'=> $upcoming_appointment
+            'upcoming_appointment'=> $upcoming_appointment,
+            'patient_profile_status'=>$patient
 
         ]);
     }

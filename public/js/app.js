@@ -25648,6 +25648,12 @@ __webpack_require__.r(__webpack_exports__);
     var _useFormatter = (0,_Components_composables_useFormatter__WEBPACK_IMPORTED_MODULE_2__["default"])(),
         formatDate = _useFormatter.formatDate;
 
+    function dateConvert(date) {
+      var appointment_date = new Date(date);
+      var result = formatDate(appointment_date.getFullYear() + "-" + (appointment_date.getMonth() + 1) + "-" + (appointment_date.getDate() + 1));
+      return result;
+    }
+
     function tConvert(time) {
       // Check correct time format and split into components
       time = time.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
@@ -25659,6 +25665,8 @@ __webpack_require__.r(__webpack_exports__);
         time[5] = +time[0] < 12 ? "AM" : "PM"; // Set AM/PM
 
         time[0] = +time[0] % 12 || 12; // Adjust hours
+
+        time[3] = " ";
       }
 
       return time.join(""); // return adjusted time or original string
@@ -25688,6 +25696,7 @@ __webpack_require__.r(__webpack_exports__);
       declineAppointment: declineAppointment,
       confirmAppointment: confirmAppointment,
       formatDate: formatDate,
+      dateConvert: dateConvert,
       tConvert: tConvert,
       term: ""
     };
@@ -25916,6 +25925,12 @@ __webpack_require__.r(__webpack_exports__);
         appointment = _useModal2.selectedValue,
         mode = _useModal2.mode;
 
+    function dateConvert(date) {
+      var appointment_date = new Date(date);
+      var result = formatDate(appointment_date.getFullYear() + "-" + (appointment_date.getMonth() + 1) + "-" + (appointment_date.getDate() + 1));
+      return result;
+    }
+
     function tConvert(time) {
       // Check correct time format and split into components
       time = time.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
@@ -25927,6 +25942,8 @@ __webpack_require__.r(__webpack_exports__);
         time[5] = +time[0] < 12 ? "AM" : "PM"; // Set AM/PM
 
         time[0] = +time[0] % 12 || 12; // Adjust hours
+
+        time[3] = " ";
       }
 
       return time.join(""); // return adjusted time or original string
@@ -25941,6 +25958,7 @@ __webpack_require__.r(__webpack_exports__);
       toggleModal: toggleModal,
       showAppointmentModal: showAppointmentModal,
       toggleAppointmentModal: toggleAppointmentModal,
+      dateConvert: dateConvert,
       tConvert: tConvert,
       term: ""
     };
@@ -25993,7 +26011,8 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     appointments: Array,
     appointments_count: String,
-    upcoming_appointment: Object
+    upcoming_appointment: Object,
+    patient_profile_status: String
   },
   setup: function setup(props) {
     var _useFormatter = (0,_Components_composables_useFormatter__WEBPACK_IMPORTED_MODULE_5__["default"])(),
@@ -26001,13 +26020,29 @@ __webpack_require__.r(__webpack_exports__);
 
     var months = ["-- --", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-    function currentDate() {
-      var current = new Date();
-      console.log(current);
-      var month = months[current.getMonth() + 1];
-      var day = (current.getDate() < 10 ? "0" : "") + current.getDate();
-      var date = [day, month];
-      return date;
+    function dateSplitter(action, appointment) {
+      if (action == "current") {
+        var current = new Date();
+        var month = months[current.getMonth() + 1];
+        var day = (current.getDate() < 10 ? "0" : "") + current.getDate();
+        var date = [day, month];
+        return date;
+      } else {
+        var _current = new Date(appointment);
+
+        var _month = months[_current.getMonth() + 1];
+
+        var _day = (_current.getDate() < 10 ? "0" : "") + _current.getDate();
+
+        var _date = [_day, _month];
+        return _date;
+      }
+    }
+
+    function dateConvert(date) {
+      var appointment_date = new Date(date);
+      var result = formatDate(appointment_date.getFullYear() + "-" + (appointment_date.getMonth() + 1) + "-" + (appointment_date.getDate() + 1));
+      return result;
     }
 
     function timeConvert(time) {
@@ -26025,14 +26060,16 @@ __webpack_require__.r(__webpack_exports__);
         time[5] = +time[0] < 12 ? "AM" : "PM"; // Set AM/PM
 
         time[0] = +time[0] % 12 || 12; // Adjust hours
+
+        time[3] = " ";
       }
 
       return time.join(""); // return adjusted time or original string
     }
 
     return {
-      formatDate: formatDate,
-      currentDate: currentDate,
+      dateConvert: dateConvert,
+      dateSplitter: dateSplitter,
       timeConvert: timeConvert
     };
   }
@@ -26736,7 +26773,7 @@ var _hoisted_1 = {
   "class": "flex"
 };
 var _hoisted_2 = {
-  "class": "mt-2 mx-4"
+  "class": "mt-2 mx-4 grid place-items-center"
 };
 var _hoisted_3 = {
   "class": "font-bold text-5xl text-gray-700"
@@ -29084,7 +29121,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         /* PROPS */
         , _hoisted_11), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
           "class": "py-4 px-6 text-sm text-gray-800 whitespace-nowrap",
-          textContent: (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.formatDate(appointment.appointment_date))
+          textContent: (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.dateConvert(appointment.appointment_date))
         }, null, 8
         /* PROPS */
         , _hoisted_12), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
@@ -29791,7 +29828,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         /* PROPS */
         , _hoisted_11), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
           "class": "py-4 px-6 text-sm text-gray-800 whitespace-nowrap",
-          textContent: (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.formatDate(appointment.appointment_date))
+          textContent: (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.dateConvert(appointment.appointment_date))
         }, null, 8
         /* PROPS */
         , _hoisted_12), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
@@ -29843,100 +29880,86 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
+  key: 0,
+  "class": "text-center bg-red-400 text-white rounded-full py-4 w-full mb-3"
+};
+
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "fas fa-exclamation-circle text-white ml-3"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Your profile is incomplete, please select the information tab to add your personal information ");
+
+var _hoisted_4 = [_hoisted_2, _hoisted_3];
+var _hoisted_5 = {
   "class": "flex"
 };
-var _hoisted_2 = {
+var _hoisted_6 = {
   "class": "mr-12"
 };
 
-var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "text-md text-gray-700 mb-1"
 }, " Upcoming Appointment: ", -1
 /* HOISTED */
 );
 
-var _hoisted_4 = {
+var _hoisted_8 = {
   "class": "grid gap-5 grid-cols-2"
 };
-var _hoisted_5 = {
+var _hoisted_9 = {
   "class": "grid place-items-center mt-2"
 };
-var _hoisted_6 = {
+var _hoisted_10 = {
   "class": "text-6xl font-bold text-gray-700"
 };
 
-var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
   "class": "text-sm"
 }, "Appointments", -1
 /* HOISTED */
 );
 
-var _hoisted_8 = {
+var _hoisted_12 = {
   "class": "grid place-items-center mt-1"
 };
 
-var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "text-xs text-white"
 }, "Current Date:", -1
 /* HOISTED */
 );
 
-var _hoisted_10 = {
+var _hoisted_14 = {
   "class": "text-4xl font-bold text-white"
 };
-var _hoisted_11 = {
+var _hoisted_15 = {
   "class": "text-md text-white"
 };
-var _hoisted_12 = {
+var _hoisted_16 = {
   "class": "flex mt-14"
 };
-var _hoisted_13 = {
+var _hoisted_17 = {
   "class": "w-72 mr-12"
 };
 
-var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "text-xl text-gray-700 mb-3"
 }, " Upcoming Appointments ", -1
 /* HOISTED */
 );
 
-var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "grid gap-2 grid-cols-2 font-bold mb-2 text-gray-700"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Date"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Time")], -1
 /* HOISTED */
 );
 
-var _hoisted_16 = {
+var _hoisted_20 = {
   "class": "grid gap-2 grid-cols-2 font-light text-gray-800 mb-1"
 };
-
-var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "py-2"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "w-full border-t border-gray-700"
-})], -1
-/* HOISTED */
-);
-
-var _hoisted_18 = {
-  "class": "m-4"
-};
-
-var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "text-xl text-gray-700 mb-4"
-}, "Updates", -1
-/* HOISTED */
-);
-
-var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "flex font-light text-gray-800 mb-1"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "mr-4"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "fas fa-check-circle text-green-300"
-})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "May 22, 2022 appointment has been confirmed")], -1
-/* HOISTED */
-);
 
 var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "py-2"
@@ -29946,7 +29969,35 @@ var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_22 = [_hoisted_20, _hoisted_21];
+var _hoisted_22 = {
+  "class": "m-4"
+};
+
+var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "text-xl text-gray-700 mb-4"
+}, "Updates", -1
+/* HOISTED */
+);
+
+var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "flex font-light text-gray-800 mb-1"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "mr-4"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "fas fa-check-circle text-green-300"
+})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "May 22, 2022 appointment has been confirmed")], -1
+/* HOISTED */
+);
+
+var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "py-2"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "w-full border-t border-gray-700"
+})], -1
+/* HOISTED */
+);
+
+var _hoisted_26 = [_hoisted_24, _hoisted_25];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_user_card = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("user-card");
 
@@ -29963,23 +30014,23 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     header: "Dashboard"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_user_card, {
+      return [$props.patient_profile_status == '0' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, _hoisted_4)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_user_card, {
         "class": "mr-12"
-      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_date_card, {
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [_hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_date_card, {
         "class": "mb-4",
-        day: "25",
-        month: "APRIL",
+        day: $setup.dateSplitter('current', $props.upcoming_appointment.appointment_date)[0],
+        month: $setup.dateSplitter('current', $props.upcoming_appointment.appointment_date)[1],
         time: $setup.timeConvert($props.upcoming_appointment.appointment_time),
         reason: $props.upcoming_appointment.reason
       }, null, 8
       /* PROPS */
-      , ["time", "reason"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_base_card, {
+      , ["day", "month", "time", "reason"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_base_card, {
         "class": "bg-gray-50 h-28 w-32"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.appointments_count), 1
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.appointments_count), 1
           /* TEXT */
-          ), _hoisted_7])];
+          ), _hoisted_11])];
         }),
         _: 1
         /* STABLE */
@@ -29988,33 +30039,33 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "class": "bg-blue-800 h-28 w-32"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.currentDate()[0]), 1
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.dateSplitter("current", 0)[0]), 1
           /* TEXT */
-          ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.currentDate()[1]), 1
+          ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.dateSplitter("current", 0)[1]), 1
           /* TEXT */
           )])];
         }),
         _: 1
         /* STABLE */
 
-      })])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_news_card)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_hoisted_14, _hoisted_15, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.appointments, function (appointment) {
+      })])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_news_card)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [_hoisted_18, _hoisted_19, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.appointments, function (appointment) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
           key: appointment.id
-        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.formatDate(appointment.appointment_date)), 1
+        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.dateConvert(appointment.appointment_date)), 1
         /* TEXT */
         ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.timeConvert(appointment.appointment_time)), 1
         /* TEXT */
-        )]), _hoisted_17]);
+        )]), _hoisted_21]);
       }), 128
       /* KEYED_FRAGMENT */
       ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_base_card, {
         "class": "bg-blue-60 h-72 w-4/5"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [_hoisted_19, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(4, function (n) {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [_hoisted_23, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(4, function (n) {
             return (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
               key: n
-            }, _hoisted_22);
+            }, _hoisted_26);
           }), 64
           /* STABLE_FRAGMENT */
           ))])];

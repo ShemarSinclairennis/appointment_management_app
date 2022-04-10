@@ -87,7 +87,7 @@
                                         <td
                                             class="py-4 px-6 text-sm text-gray-800 whitespace-nowrap"
                                             v-text="
-                                                formatDate(
+                                                dateConvert(
                                                     appointment.appointment_date
                                                 )
                                             "
@@ -157,6 +157,19 @@ export default {
 
             mode,
         } = useModal();
+
+        function dateConvert(date) {
+            let appointment_date = new Date(date);
+            let result = formatDate(
+                appointment_date.getFullYear() +
+                    "-" +
+                    (appointment_date.getMonth() + 1) +
+                    "-" +
+                    (appointment_date.getDate() + 1)
+            );
+
+            return result;
+        }
         function tConvert(time) {
             // Check correct time format and split into components
             time = time
@@ -166,9 +179,12 @@ export default {
             if (time.length > 1) {
                 // If time format correct
                 time = time.slice(1); // Remove full string match value
+
                 time[5] = +time[0] < 12 ? "AM" : "PM"; // Set AM/PM
                 time[0] = +time[0] % 12 || 12; // Adjust hours
+                time[3] = " ";
             }
+
             return time.join(""); // return adjusted time or original string
         }
 
@@ -183,6 +199,7 @@ export default {
             toggleModal,
             showAppointmentModal,
             toggleAppointmentModal,
+            dateConvert,
             tConvert,
             term: "",
         };

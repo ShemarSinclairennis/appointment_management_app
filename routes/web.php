@@ -61,7 +61,7 @@ Route::group(['middleware' => 'App\Http\Middleware\PatientMiddleware'], function
         "index",
     ])->name("dashboard.index")->middleware(['auth', 'verified']);
 
-    Route::post("patient/create", [
+    Route::get("patient/create", [
         PatientController::class,
         "create",
     ])->name("patient.create")->middleware(['auth', 'verified']);

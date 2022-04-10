@@ -1,7 +1,7 @@
 <template>
     <base-card class="bg-green-50 h-28 w-72">
         <div class="flex">
-            <div class="mt-2 mx-4">
+            <div class="mt-2 mx-4 grid place-items-center">
                 <div class="font-bold text-5xl text-gray-700">{{ day }}</div>
                 <div class="font-light text-xl text-gray-700 capitalize">
                     {{ month }}

@@ -1,5 +1,13 @@
 <template>
     <dashboard-layout :header-caption="Dashboard" header="Dashboard">
+        <div
+            v-if="patient_profile_status == '0'"
+            class="text-center bg-red-400 text-white rounded-full py-4 w-full mb-3"
+        >
+            <i class="fas fa-exclamation-circle text-white ml-3"></i>
+            Your profile is incomplete, please select the information tab to add
+            your personal information
+        </div>
         <div class="flex">
             <user-card class="mr-12" />
             <div class="mr-12">
@@ -8,8 +16,18 @@
                 </div>
                 <date-card
                     class="mb-4"
-                    day="25"
-                    month="APRIL"
+                    :day="
+                        dateSplitter(
+                            'current',
+                            upcoming_appointment.appointment_date
+                        )[0]
+                    "
+                    :month="
+                        dateSplitter(
+                            'current',
+                            upcoming_appointment.appointment_date
+                        )[1]
+                    "
                     :time="timeConvert(upcoming_appointment.appointment_time)"
                     :reason="upcoming_appointment.reason"
                 />
@@ -27,11 +45,11 @@
                         <div class="grid place-items-center mt-1">
                             <div class="text-xs text-white">Current Date:</div>
                             <div class="text-4xl font-bold text-white">
-                                {{ currentDate()[0] }}
+                                {{ dateSplitter("current", 0)[0] }}
                             </div>
 
                             <p class="text-md text-white">
-                                {{ currentDate()[1] }}
+                                {{ dateSplitter("current", 0)[1] }}
                             </p>
                         </div>
                     </base-card>
@@ -55,7 +73,7 @@
                     <div
                         class="grid gap-2 grid-cols-2 font-light text-gray-800 mb-1"
                     >
-                        <p>{{ formatDate(appointment.appointment_date) }}</p>
+                        <p>{{ dateConvert(appointment.appointment_date) }}</p>
 
                         <div>
                             {{ timeConvert(appointment.appointment_time) }}
@@ -112,6 +130,7 @@ export default {
         appointments: Array,
         appointments_count: String,
         upcoming_appointment: Object,
+        patient_profile_status: String,
     },
     setup(props) {
         const { formatDate } = useFormatter();
@@ -130,13 +149,35 @@ export default {
             "November",
             "December",
         ];
-        function currentDate() {
-            const current = new Date();
-            console.log(current);
-            const month = months[current.getMonth() + 1];
-            const day = (current.getDate() < 10 ? "0" : "") + current.getDate();
-            const date = [day, month];
-            return date;
+        function dateSplitter(action, appointment) {
+            if (action == "current") {
+                const current = new Date();
+                const month = months[current.getMonth() + 1];
+                const day =
+                    (current.getDate() < 10 ? "0" : "") + current.getDate();
+                const date = [day, month];
+                return date;
+            } else {
+                const current = new Date(appointment);
+                const month = months[current.getMonth() + 1];
+                const day =
+                    (current.getDate() < 10 ? "0" : "") + current.getDate();
+                const date = [day, month];
+                return date;
+            }
+        }
+
+        function dateConvert(date) {
+            let appointment_date = new Date(date);
+            let result = formatDate(
+                appointment_date.getFullYear() +
+                    "-" +
+                    (appointment_date.getMonth() + 1) +
+                    "-" +
+                    (appointment_date.getDate() + 1)
+            );
+
+            return result;
         }
 
         function timeConvert(time) {
@@ -153,13 +194,14 @@ export default {
                 time = time.slice(1); // Remove full string match value
                 time[5] = +time[0] < 12 ? "AM" : "PM"; // Set AM/PM
                 time[0] = +time[0] % 12 || 12; // Adjust hours
+                time[3] = " ";
             }
             return time.join(""); // return adjusted time or original string
         }
 
         return {
-            formatDate,
-            currentDate,
+            dateConvert,
+            dateSplitter,
             timeConvert,
         };
     },
