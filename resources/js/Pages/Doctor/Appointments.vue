@@ -260,7 +260,7 @@ export default {
         }
 
         function confirmAppointment(appointment) {
-            Inertia.visit("appointment/confirm", {
+            Inertia.visit(route("appointment.confirm"), {
                 method: "put",
                 data: { appointment: appointment },
             });
@@ -268,7 +268,7 @@ export default {
 
         function reschedule(appointment) {}
         function declineAppointment(appointment) {
-            Inertia.visit("appointment/declined", {
+            Inertia.visit(route("appointment.decline"), {
                 method: "put",
                 data: { appointment: appointment },
             });

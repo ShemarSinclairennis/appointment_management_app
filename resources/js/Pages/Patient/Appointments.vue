@@ -100,10 +100,31 @@
                                                 )
                                             "
                                         />
-                                        <td>
-                                            <status-tag
-                                                :status="appointment.status"
-                                            />
+                                        <td class="flex justify-between">
+                                            <div class="mt-3">
+                                                <status-tag
+                                                    :status="appointment.status"
+                                                />
+                                            </div>
+                                            <div>
+                                                <Link
+                                                    method="delete"
+                                                    :href="
+                                                        route(
+                                                            'appointments.destroy',
+                                                            appointment
+                                                        )
+                                                    "
+                                                >
+                                                    <i
+                                                        v-if="
+                                                            appointment.status ==
+                                                            'Declined'
+                                                        "
+                                                        class="fas fa-trash-alt text-red mt-3 mr-8 hover:bg-red hover:p-2 hover:rounded-full hover:text-white-500"
+                                                    ></i>
+                                                </Link>
+                                            </div>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -133,11 +154,13 @@ import BaseButton from "@/Components/Common/BaseButton";
 import StatusTag from "@/Components/Common/StatusTag";
 import AppointmentModal from "@/Components/AppointmentModal";
 import useModal from "@/composables/useModal";
+import { Link } from "@inertiajs/inertia-vue3";
 import { Inertia } from "@inertiajs/inertia";
 import { provide, toRefs } from "vue";
 
 export default {
     components: {
+        Link,
         DashboardLayout,
         Pagination,
         StatusTag,

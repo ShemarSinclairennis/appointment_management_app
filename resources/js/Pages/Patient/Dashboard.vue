@@ -89,14 +89,27 @@
                 <div class="m-4">
                     <div class="text-xl text-gray-700 mb-4">Updates</div>
 
-                    <div v-for="n in 4" :key="n">
+                    <div v-for="update in updates" :key="update.id">
                         <div class="flex font-light text-gray-800 mb-1">
                             <div class="mr-4">
                                 <i
+                                    v-if="update.status == 'Confirmed'"
                                     class="fas fa-check-circle text-green-300"
                                 ></i>
+                                <i
+                                    v-if="update.status == 'Declined'"
+                                    class="fas fa-times-circle text-red"
+                                ></i>
                             </div>
-                            <p>May 22, 2022 appointment has been confirmed</p>
+                            <p>
+                                {{
+                                    updateApp(
+                                        update.appointment_date,
+                                        update.appointment_time,
+                                        update.status
+                                    )
+                                }}
+                            </p>
                         </div>
                         <div class="py-2">
                             <div class="w-full border-t border-gray-700"></div>
@@ -127,6 +140,7 @@ export default {
         SmallTable,
     },
     props: {
+        updates: Array,
         appointments: Array,
         appointments_count: String,
         upcoming_appointment: Object,
@@ -149,7 +163,7 @@ export default {
             "November",
             "December",
         ];
-        function dateSplitter(action, appointment) {
+        function dateSplitter(action, appointment, time) {
             if (action == "current") {
                 const current = new Date();
                 const month = months[current.getMonth() + 1];
@@ -179,6 +193,25 @@ export default {
 
             return result;
         }
+        function updateApp(date, time, status) {
+            if (status.toLowerCase() == "confirmed") {
+                var message =
+                    "Your appointment for " +
+                    dateConvert(date) +
+                    " at " +
+                    timeConvert(time) +
+                    " has been confirmed";
+            } else {
+                var message =
+                    "Your appointment for " +
+                    dateConvert(date) +
+                    " at " +
+                    timeConvert(time) +
+                    " has been declined";
+            }
+
+            return message;
+        }
 
         function timeConvert(time) {
             // Check correct time format and split into components
@@ -200,6 +233,7 @@ export default {
         }
 
         return {
+            updateApp,
             dateConvert,
             dateSplitter,
             timeConvert,

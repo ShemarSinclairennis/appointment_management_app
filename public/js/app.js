@@ -25673,7 +25673,7 @@ __webpack_require__.r(__webpack_exports__);
     }
 
     function confirmAppointment(appointment) {
-      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_7__.Inertia.visit("appointment/confirm", {
+      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_7__.Inertia.visit(route("appointment.confirm"), {
         method: "put",
         data: {
           appointment: appointment
@@ -25684,7 +25684,7 @@ __webpack_require__.r(__webpack_exports__);
     function reschedule(appointment) {}
 
     function declineAppointment(appointment) {
-      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_7__.Inertia.visit("appointment/declined", {
+      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_7__.Inertia.visit(route("appointment.decline"), {
         method: "put",
         data: {
           appointment: appointment
@@ -25889,8 +25889,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Components_Common_StatusTag__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/Components/Common/StatusTag */ "./resources/js/Components/Common/StatusTag.vue");
 /* harmony import */ var _Components_AppointmentModal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/Components/AppointmentModal */ "./resources/js/Components/AppointmentModal.vue");
 /* harmony import */ var _composables_useModal__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/composables/useModal */ "./resources/js/composables/useModal.js");
-/* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @inertiajs/inertia-vue3 */ "./node_modules/@inertiajs/inertia-vue3/dist/index.js");
+/* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
 
 
 
@@ -25902,6 +25904,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
+    Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_7__.Link,
     DashboardLayout: _Layouts_DashboardLayout__WEBPACK_IMPORTED_MODULE_0__["default"],
     Pagination: _Components_Common_Pagination__WEBPACK_IMPORTED_MODULE_1__["default"],
     StatusTag: _Components_Common_StatusTag__WEBPACK_IMPORTED_MODULE_4__["default"],
@@ -25949,9 +25952,9 @@ __webpack_require__.r(__webpack_exports__);
       return time.join(""); // return adjusted time or original string
     }
 
-    (0,vue__WEBPACK_IMPORTED_MODULE_8__.provide)("toggleAppointmentModal", toggleAppointmentModal);
-    (0,vue__WEBPACK_IMPORTED_MODULE_8__.provide)("appointment", appointment);
-    (0,vue__WEBPACK_IMPORTED_MODULE_8__.provide)("mode", mode);
+    (0,vue__WEBPACK_IMPORTED_MODULE_9__.provide)("toggleAppointmentModal", toggleAppointmentModal);
+    (0,vue__WEBPACK_IMPORTED_MODULE_9__.provide)("appointment", appointment);
+    (0,vue__WEBPACK_IMPORTED_MODULE_9__.provide)("mode", mode);
     return {
       formatDate: formatDate,
       showModal: showModal,
@@ -25965,7 +25968,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     search: function search() {
-      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_7__.Inertia.replace(route("appointments.show", {
+      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_8__.Inertia.replace(route("appointments.show", {
         term: this.term
       }));
     }
@@ -26009,6 +26012,7 @@ __webpack_require__.r(__webpack_exports__);
     SmallTable: _Components_Common_SmallTable__WEBPACK_IMPORTED_MODULE_6__["default"]
   },
   props: {
+    updates: Array,
     appointments: Array,
     appointments_count: String,
     upcoming_appointment: Object,
@@ -26020,7 +26024,7 @@ __webpack_require__.r(__webpack_exports__);
 
     var months = ["-- --", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-    function dateSplitter(action, appointment) {
+    function dateSplitter(action, appointment, time) {
       if (action == "current") {
         var current = new Date();
         var month = months[current.getMonth() + 1];
@@ -26043,6 +26047,16 @@ __webpack_require__.r(__webpack_exports__);
       var appointment_date = new Date(date);
       var result = formatDate(appointment_date.getFullYear() + "-" + (appointment_date.getMonth() + 1) + "-" + (appointment_date.getDate() + 1));
       return result;
+    }
+
+    function updateApp(date, time, status) {
+      if (status.toLowerCase() == "confirmed") {
+        var message = "Your appointment for " + dateConvert(date) + " at " + timeConvert(time) + " has been confirmed";
+      } else {
+        var message = "Your appointment for " + dateConvert(date) + " at " + timeConvert(time) + " has been declined";
+      }
+
+      return message;
     }
 
     function timeConvert(time) {
@@ -26068,6 +26082,7 @@ __webpack_require__.r(__webpack_exports__);
     }
 
     return {
+      updateApp: updateApp,
       dateConvert: dateConvert,
       dateSplitter: dateSplitter,
       timeConvert: timeConvert
@@ -29781,10 +29796,22 @@ var _hoisted_10 = {
 var _hoisted_11 = ["textContent"];
 var _hoisted_12 = ["textContent"];
 var _hoisted_13 = ["textContent"];
+var _hoisted_14 = {
+  "class": "flex justify-between"
+};
+var _hoisted_15 = {
+  "class": "mt-3"
+};
+var _hoisted_16 = {
+  key: 0,
+  "class": "fas fa-trash-alt text-red mt-3 mr-8 hover:bg-red hover:p-2 hover:rounded-full hover:text-white-500"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_base_button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("base-button");
 
   var _component_status_tag = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("status-tag");
+
+  var _component_Link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Link");
 
   var _component_pagination = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("pagination");
 
@@ -29836,11 +29863,23 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           textContent: (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.tConvert(appointment.appointment_time))
         }, null, 8
         /* PROPS */
-        , _hoisted_13), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_status_tag, {
+        , _hoisted_13), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_status_tag, {
           status: appointment.status
         }, null, 8
         /* PROPS */
-        , ["status"])])]);
+        , ["status"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
+          method: "delete",
+          href: _ctx.route('appointments.destroy', appointment)
+        }, {
+          "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+            return [appointment.status == 'Declined' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("i", _hoisted_16)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
+          }),
+          _: 2
+          /* DYNAMIC */
+
+        }, 1032
+        /* PROPS, DYNAMIC_SLOTS */
+        , ["href"])])])]);
       }), 128
       /* KEYED_FRAGMENT */
       ))])])])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_pagination, {
@@ -29979,17 +30018,22 @@ var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_24 = {
   "class": "flex font-light text-gray-800 mb-1"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+};
+var _hoisted_25 = {
   "class": "mr-4"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+};
+var _hoisted_26 = {
+  key: 0,
   "class": "fas fa-check-circle text-green-300"
-})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "May 22, 2022 appointment has been confirmed")], -1
-/* HOISTED */
-);
+};
+var _hoisted_27 = {
+  key: 1,
+  "class": "fas fa-times-circle text-red"
+};
 
-var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_28 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "py-2"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "w-full border-t border-gray-700"
@@ -29997,7 +30041,6 @@ var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_26 = [_hoisted_24, _hoisted_25];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_user_card = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("user-card");
 
@@ -30062,12 +30105,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "class": "bg-blue-60 h-72 w-4/5"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [_hoisted_23, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(4, function (n) {
-            return (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-              key: n
-            }, _hoisted_26);
-          }), 64
-          /* STABLE_FRAGMENT */
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [_hoisted_23, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.updates, function (update) {
+            return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+              key: update.id
+            }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [update.status == 'Confirmed' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("i", _hoisted_26)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), update.status == 'Declined' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("i", _hoisted_27)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.updateApp(update.appointment_date, update.appointment_time, update.status)), 1
+            /* TEXT */
+            )]), _hoisted_28]);
+          }), 128
+          /* KEYED_FRAGMENT */
           ))])];
         }),
         _: 1

@@ -56,6 +56,9 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function (
 
 //Patient Middleware
 Route::group(['middleware' => 'App\Http\Middleware\PatientMiddleware'], function () {
+
+    
+
     Route::get("dashboard", [
         DashboardController::class,
         "index",
@@ -131,22 +134,22 @@ Route::group(['middleware' => 'App\Http\Middleware\DoctorMiddleware'], function 
         "confirmAppointment",
     ])->name("appointment.confirm")->middleware(['auth', 'verified']);
 
-    Route::put("appointment/declined", [
+    Route::put("appointment/decline", [
         AppointmentController::class,
         "declineAppointment",
-    ])->name("appointment.declined")->middleware(['auth', 'verified']);
+    ])->name("appointment.decline")->middleware(['auth', 'verified']);
 
     Route::get("appointments/index", [
         AppointmentController::class,
         "index",
     ])->name("appointments.index")->middleware(['auth', 'verified']);
 
-    Route::delete("appointments/{appointment}", [
-        AppointmentController::class,
-        "destroy",
-    ])->name("appointments.destroy")->middleware(['auth', 'verified']);
+    
 });
-
+Route::delete("appointments/{appointment}", [
+    AppointmentController::class,
+    "destroy",
+])->name("appointments.destroy")->middleware(['auth', 'verified']);
 // Route::resource("appointments", AppointmentController::class)->except([
 //     "edit",
 //     "create",
