@@ -88,21 +88,21 @@
                         <th
                             scope="row"
                             class="px-6 py-4 font-medium text-gray-700 whitespace-nowrap"
-                            v-if="appointment.patient_id == patient.id"
+                            v-if="appointment.patient_id == patient.patient_id"
                             v-text="appointment.reason"
                         />
                         <td
-                            v-if="appointment.patient_id == patient.id"
+                            v-if="appointment.patient_id == patient.patient_id"
                             class="px-6 py-4"
                             v-text="formatDate(appointment.appointment_date)"
                         />
                         <td
-                            v-if="appointment.patient_id == patient.id"
+                            v-if="appointment.patient_id == patient.patient_id"
                             class="px-6 py-4"
                             v-text="tConvert(appointment.appointment_time)"
                         />
                         <td
-                            v-if="appointment.patient_id == patient.id"
+                            v-if="appointment.patient_id == patient.patient_id"
                             class="px-6 py-4"
                             v-text="appointment.status"
                         />
